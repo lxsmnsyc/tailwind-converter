@@ -5,10 +5,10 @@ import { createCSSMediaQuery, CSSMediaQuery } from '../css-media-query';
 export default function createDarkCSSBlock(
   base: string[],
   variant: Variant,
-  mode: 'media' | 'class',
+  selector?: string,
 ): CSSBlock | CSSMediaQuery {
-  if (mode === 'media') {
-    return createCSSMediaQuery('(prefers-color-scheme: dark)', variant);
+  if (selector) {
+    return createCSSBlock(base.map((item) => `${selector} ${item}`), variant);
   }
-  return createCSSBlock(base.map((item) => `.dark ${item}`), variant);
+  return createCSSMediaQuery('(prefers-color-scheme: dark)', variant);
 }

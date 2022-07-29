@@ -16,7 +16,9 @@ import createRTLBlock from './rtl';
 import createStateCSSBlock from './state';
 
 export interface VariantOptions {
-  darkMode: 'media' | 'class';
+  darkMode?: string;
+  groupSelector?: string;
+  peerSelector?: string;
 }
 
 function createPseudoSelectorBlock(
@@ -52,13 +54,13 @@ export default function createVariant(
     case 'variant:dark':
       return createDarkCSSBlock(base, variant, options.darkMode);
     case 'variant:group': {
-      const baseSelector = createPseudoSelectorBlock(['group'], variant.value).selectors;
+      const baseSelector = createPseudoSelectorBlock([options.groupSelector ?? 'group'], variant.value).selectors;
       return createCSSBlock(base.map((item) => `${baseSelector[0]} ${item}`), variant);
     }
     case 'variant:orientation':
       return createOrientationMediaQuery(variant);
     case 'variant:peer': {
-      const baseSelector = createPseudoSelectorBlock(['peer'], variant.value).selectors;
+      const baseSelector = createPseudoSelectorBlock([options.peerSelector ?? 'peer'], variant.value).selectors;
       return createCSSBlock(base.map((item) => `${baseSelector[0]} ${item}`), variant);
     }
     case 'variant:prefers-contrast':
