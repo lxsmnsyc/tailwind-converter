@@ -115,7 +115,7 @@ export default function App() {
           </div>
           <div class="flex flex-col space-y-2">
             <span class="text-xl font-bold">Options</span>
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-2">
               <span class="font-semibold flex-none">Base Selector</span>
               <TextInput
                 onInput={(e) => {
@@ -126,7 +126,7 @@ export default function App() {
                 value={base()}
               />
             </div>
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-2">
               <span class="font-semibold flex-none">Group Selector</span>
               <TextInput
                 onInput={(e) => {
@@ -137,7 +137,7 @@ export default function App() {
                 value={groupSelector()}
               />
             </div>
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-2">
               <span class="font-semibold flex-none">Peer Selector</span>
               <TextInput
                 onInput={(e) => {
@@ -148,9 +148,9 @@ export default function App() {
                 value={peerSelector()}
               />
             </div>
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-2">
               <span class="font-semibold flex-none">Dark Mode</span>
-              <div class="flex flex-row space-x-1">
+              <div class="flex flex-row space-x-2">
                 <Checkbox
                   onChange={setDarkFlag}
                 />

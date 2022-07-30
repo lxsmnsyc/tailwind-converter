@@ -1,28 +1,15 @@
+import { POSITION, PositionValue } from '../../../values/position';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type PositionValue =
-  | 'static'
-  | 'fixed'
-  | 'absolute'
-  | 'relative'
-  | 'sticky';
 
 export interface Position extends MatchResult<PositionValue> {
   type: 'position';
 }
 
-const matcher = alternation(
-  literal('static'),
-  literal('fixed'),
-  literal('absolute'),
-  literal('relative'),
-  literal('sticky'),
-);
+const matcher = match(POSITION);
 
 export default function position(feed: Feed): Position | undefined {
   const result = matcher(feed);

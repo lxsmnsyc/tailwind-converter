@@ -14,6 +14,7 @@ import { OBJECT_FIT } from '../../values/object-fit';
 import { OBJECT_POSITION } from '../../values/object-position';
 import { OVERFLOW } from '../../values/overflow';
 import { OVERSCROLL } from '../../values/overscroll';
+import { POSITION } from '../../values/position';
 import {
   insertProperty,
 } from '../css-context';
@@ -37,6 +38,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'object-position': return insertProperty(OBJECT_POSITION[atom.value], atom);
     case 'overflow': return insertProperty(OVERFLOW[atom.value], atom);
     case 'overscroll': return insertProperty(OVERSCROLL[atom.value], atom);
+    case 'position': return insertProperty(POSITION[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
