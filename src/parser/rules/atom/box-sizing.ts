@@ -1,22 +1,15 @@
+import { BoxSizingValue, BOX_SIZING } from '../../../values/box-sizing';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type BoxSizingValue =
-  | 'box-border'
-  | 'box-content';
 
 export interface BoxSizing extends MatchResult<BoxSizingValue> {
   type: 'box-sizing';
 }
 
-const matcher = alternation(
-  literal('box-border'),
-  literal('box-content'),
-);
+const matcher = match(BOX_SIZING);
 
 export default function boxSizing(feed: Feed): BoxSizing | undefined {
   const result = matcher(feed);

@@ -77,7 +77,7 @@ export default function App() {
     <div class="p-4 w-screen md:h-screen">
       <div class="gap-4 flex flex-col md:flex-row w-full h-full">
         <div class="flex flex-col space-y-2 flex-1">
-          <div>
+          <div class="flex flex-col space-y-2">
             <span class="text-2xl font-bold">Class</span>
             <textarea
               class="w-full rounded p-2 outline-none ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black"
