@@ -3,7 +3,6 @@ import {
   BREAK_AFTER,
 } from '../../../values/break-after';
 import {
-  alternation,
   Feed,
   match,
   MatchResult,
@@ -13,9 +12,7 @@ export interface BreakAfter extends MatchResult<BreakAfterValue> {
   type: 'break-after';
 }
 
-const matcher = alternation(
-  ...match(BREAK_AFTER),
-);
+const matcher = match(BREAK_AFTER);
 
 export default function breakAfter(feed: Feed): BreakAfter | undefined {
   const result = matcher(feed);

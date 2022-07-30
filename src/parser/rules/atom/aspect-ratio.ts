@@ -3,7 +3,6 @@ import {
   ASPECT_RATIO,
 } from '../../../values/aspect-ratio';
 import {
-  alternation,
   Feed,
   match,
   MatchResult,
@@ -13,9 +12,7 @@ export interface AspectRatio extends MatchResult<AspectRatioValue> {
   type: 'aspect-ratio';
 }
 
-const matcher = alternation(
-  ...match(ASPECT_RATIO),
-);
+const matcher = match(ASPECT_RATIO);
 
 export default function aspectRatio(feed: Feed): AspectRatio | undefined {
   const result = matcher(feed);

@@ -1,6 +1,5 @@
 import { COLUMNS, ColumnsValue } from '../../../values/columns';
 import {
-  alternation,
   Feed,
   match,
   MatchResult,
@@ -10,9 +9,7 @@ export interface Columns extends MatchResult<ColumnsValue> {
   type: 'columns';
 }
 
-const matcher = alternation(
-  ...match(COLUMNS),
-);
+const matcher = match(COLUMNS);
 
 export default function columns(feed: Feed): Columns | undefined {
   const result = matcher(feed);
