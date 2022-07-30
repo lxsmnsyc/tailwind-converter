@@ -12,6 +12,7 @@ import { FLEX } from '../../values/flex';
 import { FLEX_BASIS } from '../../values/flex-basis';
 import { FLEX_DIRECTION } from '../../values/flex-direction';
 import { FLEX_GROW } from '../../values/flex-grow';
+import { FLEX_SHRINK } from '../../values/flex-shrink';
 import { FLEX_WRAP } from '../../values/flex-wrap';
 import { FLOAT } from '../../values/float';
 import {
@@ -67,6 +68,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'flex-wrap': return insertProperty(FLEX_WRAP[atom.value], atom);
     case 'flex': return insertProperty(FLEX[atom.value], atom);
     case 'flex-grow': return insertProperty(FLEX_GROW[atom.value], atom);
+    case 'flex-shrink': return insertProperty(FLEX_SHRINK[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
