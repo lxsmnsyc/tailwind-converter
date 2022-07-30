@@ -7,6 +7,7 @@ import { BREAK_BEFORE } from '../../values/break-before';
 import { BREAK_INSIDE } from '../../values/break-inside';
 import { COLUMNS } from '../../values/columns';
 import { DISPLAY } from '../../values/display';
+import { FLOAT } from '../../values/float';
 import {
   insertProperty,
 } from '../css-context';
@@ -23,6 +24,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'box-decoration': return insertProperty(BOX_DECORATION[atom.value], atom);
     case 'box-sizing': return insertProperty(BOX_SIZING[atom.value], atom);
     case 'display': return insertProperty(DISPLAY[atom.value], atom);
+    case 'float': return insertProperty(FLOAT[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }

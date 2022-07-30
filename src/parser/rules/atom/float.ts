@@ -1,24 +1,15 @@
+import { FLOAT, FloatValue } from '../../../values/float';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type FloatValue =
-  | 'float-right'
-  | 'float-left'
-  | 'float-none';
 
 export interface Float extends MatchResult<FloatValue> {
   type: 'float';
 }
 
-const matcher = alternation(
-  literal('float-right'),
-  literal('float-left'),
-  literal('float-none'),
-);
+const matcher = match(FLOAT);
 
 export default function float(feed: Feed): Float | undefined {
   const result = matcher(feed);

@@ -13,6 +13,7 @@ import clear, { Clear } from './clear';
 import columns, { Columns } from './columns';
 import container, { Container } from './container';
 import display, { Display } from './display';
+import float, { Float } from './float';
 import isolation, { Isolation } from './isolation';
 import objectFit, { ObjectFit } from './object-fit';
 import objectPosition, { ObjectPosition } from './object-position';
@@ -31,6 +32,7 @@ export type AtomValue =
   | BoxDecoration
   | BoxSizing
   | Display
+  | Float
   | Clear
   | Isolation
   | ObjectFit
@@ -54,6 +56,7 @@ const matcher = alternation(
   boxDecoration,
   boxSizing,
   display,
+  float,
   clear,
   isolation,
   objectFit,
