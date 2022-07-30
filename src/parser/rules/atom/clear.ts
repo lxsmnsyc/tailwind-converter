@@ -1,26 +1,15 @@
+import { CLEAR, ClearValue } from '../../../values/clear';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type ClearValue =
-  | 'clear-right'
-  | 'clear-left'
-  | 'clear-both'
-  | 'clear-none';
 
 export interface Clear extends MatchResult<ClearValue> {
   type: 'clear';
 }
 
-const matcher = alternation(
-  literal('clear-right'),
-  literal('clear-left'),
-  literal('clear-both'),
-  literal('clear-none'),
-);
+const matcher = match(CLEAR);
 
 export default function clear(feed: Feed): Clear | undefined {
   const result = matcher(feed);

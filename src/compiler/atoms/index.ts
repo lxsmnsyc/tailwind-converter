@@ -5,6 +5,7 @@ import { BOX_SIZING } from '../../values/box-sizing';
 import { BREAK_AFTER } from '../../values/break-after';
 import { BREAK_BEFORE } from '../../values/break-before';
 import { BREAK_INSIDE } from '../../values/break-inside';
+import { CLEAR } from '../../values/clear';
 import { COLUMNS } from '../../values/columns';
 import { DISPLAY } from '../../values/display';
 import { FLOAT } from '../../values/float';
@@ -25,6 +26,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'box-sizing': return insertProperty(BOX_SIZING[atom.value], atom);
     case 'display': return insertProperty(DISPLAY[atom.value], atom);
     case 'float': return insertProperty(FLOAT[atom.value], atom);
+    case 'clear': return insertProperty(CLEAR[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
