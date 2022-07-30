@@ -1,4 +1,4 @@
-import { createEffect } from 'solid-js';
+import { createEffect, JSX } from 'solid-js';
 import loadHighlighter from '../utils/load-highlighter';
 
 export interface CSSDisplayProps {

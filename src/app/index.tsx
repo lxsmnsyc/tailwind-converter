@@ -6,6 +6,7 @@ import {
 } from 'solid-headless';
 import { createEffect, createSignal } from 'solid-js';
 import compile from '../compiler';
+import classNames from '../utils/classnames';
 import ASTDisplay from './ASTDisplay';
 import Button from './Button';
 import CSSDisplay from './CSSDisplay';
@@ -22,6 +23,23 @@ function debounce<T extends any[]>(cb: (...args: T) => void, ms = 200) {
       cb(...args);
     }, ms);
   };
+}
+
+interface OverlayProps {
+  loading: boolean;
+}
+
+function Overlay(props: OverlayProps) {
+  return (
+    <div
+      class={classNames(
+        'w-full h-full absolute top-0',
+        'transition duration-200 bg-gray-50',
+        'pointer-events-none',
+        props.loading ? 'opacity-50' : 'opacity-0',
+      )}
+    />
+  );
 }
 
 export default function App() {
@@ -74,9 +92,9 @@ export default function App() {
   }
 
   return (
-    <div class="p-4 w-screen md:h-screen">
-      <div class="gap-4 flex flex-col md:flex-row w-full h-full">
-        <div class="flex flex-col space-y-2 flex-1">
+    <div class="p-8 flex flex-col gap-4 md:gap-0 md:flex-row">
+      <div class="w-full md:w-1/2">
+        <div class="flex flex-col space-y-2">
           <div class="flex flex-col space-y-2">
             <span class="text-2xl font-bold">Class</span>
             <textarea
@@ -126,22 +144,32 @@ export default function App() {
             </div>
           </div>
         </div>
-        <div class="flex flex-col space-y-2 flex-1">
-          <TabGroup class="flex w-full h-full flex-col space-y-2 relative" defaultValue="CSS" horizontal>
-            <div class="absolute m-6 right-0 flex flex-none flex-row justify-between items-center">
-              <TabList class="flex flex-row space-x-2">
-                <Tab as={Button} value="CSS">CSS</Tab>
-                <Tab as={Button} value="AST">AST</Tab>
-              </TabList>
-            </div>
-            <TabPanel class="flex-1 w-full h-full overflow-hidden rounded-lg" value="CSS">
-              <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
-            </TabPanel>
-            <TabPanel class="flex-1 w-full h-full overflow-hidden rounded-lg" value="AST">
-              <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
-            </TabPanel>
-          </TabGroup>
-        </div>
+      </div>
+      <div class="preview">
+        <TabGroup class="flex w-full h-full flex-col relative" defaultValue="CSS" horizontal>
+          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-lg relative" value="CSS">
+            <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
+            <Overlay loading={cssLoading() || pendingInput() !== input()} />
+          </TabPanel>
+          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-lg relative" value="AST">
+            <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
+            <div
+              class={classNames(
+                'w-full h-full absolute top-0',
+                'transition duration-200 bg-gray-50',
+                'pointer-events-none',
+                (astLoading() || pendingInput() !== input()) ? 'opacity-50' : 'opacity-0',
+              )}
+            />
+            <Overlay loading={astLoading() || pendingInput() !== input()} />
+          </TabPanel>
+          <div class="absolute right-0 flex flex-none flex-row justify-between items-center">
+            <TabList class="flex flex-row space-x-2 bg-gray-50 rounded-b-lg p-2">
+              <Tab as={Button} size="small" value="CSS">CSS</Tab>
+              <Tab as={Button} size="small" value="AST">AST</Tab>
+            </TabList>
+          </div>
+        </TabGroup>
       </div>
     </div>
   );

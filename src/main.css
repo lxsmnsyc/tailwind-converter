@@ -5,3 +5,7 @@
 .shiki {
   @apply p-4 overflow-x-auto float-left h-full min-w-full text-sm;
 }
+
+.preview {
+  @apply w-full h-[50vh] md:w-[calc(50vw-2rem)] md:h-[calc(100vh-2rem)] flex flex-col space-y-2 flex-1 md:fixed md:top-0 md:right-0 md:m-4;
+}
