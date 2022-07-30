@@ -4,6 +4,7 @@ import {
   MatchResult,
 } from '../../core';
 import aspectRatio, { AspectRatio } from './aspect-ratio';
+import bottom, { Bottom } from './bottom';
 import boxDecoration, { BoxDecoration } from './box-decoration';
 import boxSizing, { BoxSizing } from './box-sizing';
 import breakAfter, { BreakAfter } from './break-after';
@@ -14,12 +15,18 @@ import columns, { Columns } from './columns';
 import container, { Container } from './container';
 import display, { Display } from './display';
 import float, { Float } from './float';
+import inset, { Inset } from './inset';
+import insetX, { InsetX } from './inset-x';
+import insetY, { InsetY } from './inset-y';
 import isolation, { Isolation } from './isolation';
+import left, { Left } from './left';
 import objectFit, { ObjectFit } from './object-fit';
 import objectPosition, { ObjectPosition } from './object-position';
 import overflow, { Overflow } from './overflow';
 import overscroll, { Overscroll } from './overscroll';
 import position, { Position } from './position';
+import right, { Right } from './right';
+import top, { Top } from './top';
 import visibility, { Visibility } from './visibility';
 
 export type AtomValue =
@@ -40,6 +47,13 @@ export type AtomValue =
   | Overflow
   | Overscroll
   | Position
+  | Inset
+  | InsetX
+  | InsetY
+  | Top
+  | Bottom
+  | Left
+  | Right
   | Visibility;
 
 export interface Atom extends MatchResult<AtomValue> {
@@ -64,7 +78,13 @@ const matcher = alternation(
   overflow,
   overscroll,
   position,
-
+  inset,
+  insetX,
+  insetY,
+  top,
+  bottom,
+  left,
+  right,
   visibility,
 );
 

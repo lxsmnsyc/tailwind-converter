@@ -29,10 +29,20 @@ export function getBlock(): CSSBlock {
   return BLOCK_STACK[BLOCK_STACK.length - 1];
 }
 
-export function insertProperty(property: string, atom: AtomValue): void {
-  getBlock().properties.push({
-    value: property,
-    start: atom.start,
-    end: atom.end,
-  });
+export function insertProperty(property: string | string[], atom: AtomValue): void {
+  if (Array.isArray(property)) {
+    for (const prop of property) {
+      getBlock().properties.push({
+        value: prop,
+        start: atom.start,
+        end: atom.end,
+      });
+    }
+  } else {
+    getBlock().properties.push({
+      value: property,
+      start: atom.start,
+      end: atom.end,
+    });
+  }
 }

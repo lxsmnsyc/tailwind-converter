@@ -9,6 +9,15 @@ import { CLEAR } from '../../values/clear';
 import { COLUMNS } from '../../values/columns';
 import { DISPLAY } from '../../values/display';
 import { FLOAT } from '../../values/float';
+import {
+  BOTTOM,
+  INSET,
+  INSET_X,
+  INSET_Y,
+  LEFT,
+  RIGHT,
+  TOP,
+} from '../../values/inset';
 import { ISOLATION } from '../../values/isolation';
 import { OBJECT_FIT } from '../../values/object-fit';
 import { OBJECT_POSITION } from '../../values/object-position';
@@ -39,6 +48,13 @@ export default function createAtom(atom: AtomValue): void {
     case 'overflow': return insertProperty(OVERFLOW[atom.value], atom);
     case 'overscroll': return insertProperty(OVERSCROLL[atom.value], atom);
     case 'position': return insertProperty(POSITION[atom.value], atom);
+    case 'inset': return insertProperty(INSET[atom.value], atom);
+    case 'inset-x': return insertProperty(INSET_X[atom.value], atom);
+    case 'inset-y': return insertProperty(INSET_Y[atom.value], atom);
+    case 'top': return insertProperty(TOP[atom.value], atom);
+    case 'bottom': return insertProperty(BOTTOM[atom.value], atom);
+    case 'left': return insertProperty(LEFT[atom.value], atom);
+    case 'right': return insertProperty(RIGHT[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }

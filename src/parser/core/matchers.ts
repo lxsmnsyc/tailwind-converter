@@ -149,7 +149,7 @@ export function optional<T>(matcher: Matcher<T>): Matcher<MatchResult<T> | null>
   };
 }
 
-export function match(map: Record<string, string>): Matcher<string> {
+export function match(map: Record<string, string | string[]>): Matcher<string> {
   return alternation(
     ...Object.keys(map).map((item) => literal(item)),
   );
