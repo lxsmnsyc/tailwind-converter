@@ -2,7 +2,10 @@ import {
   Feed,
   alternation,
   MatchResult,
+  sequence,
 } from '../../core';
+import blank from '../blank';
+import eof from '../eof';
 import aspectRatio, { AspectRatio } from './aspect-ratio';
 import bottom, { Bottom } from './bottom';
 import boxDecoration, { BoxDecoration } from './box-decoration';
@@ -79,7 +82,7 @@ export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
 }
 
-const matcher = alternation(
+const baseMatcher = alternation(
   // Flexbox and Grid
   flexBasis,
   flexDirection,
@@ -118,15 +121,23 @@ const matcher = alternation(
   zIndex,
 );
 
+const matcher = sequence(
+  baseMatcher,
+  alternation(
+    blank,
+    eof,
+  ),
+);
+
 export default function atom(feed: Feed): Atom | undefined {
   const result = matcher(feed);
 
   if (result) {
     return {
       type: 'atom',
-      value: result as AtomValue,
-      start: result.start,
-      end: result.end,
+      value: result.value[0] as AtomValue,
+      start: result.value[0].start,
+      end: result.value[0].end,
     };
   }
   return undefined;
