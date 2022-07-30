@@ -1,28 +1,15 @@
+import { BREAKPOINTS, BreakpointValue } from '../../../values/breakpoints';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type BreakpointValue =
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl';
 
 export interface Breakpoint extends MatchResult<BreakpointValue> {
   type: 'variant:breakpoint';
 }
 
-const matcher = alternation(
-  literal('sm'),
-  literal('md'),
-  literal('lg'),
-  literal('xl'),
-  literal('2xl'),
-);
+const matcher = match(BREAKPOINTS);
 
 export default function breakpointVariant(feed: Feed): Breakpoint | undefined {
   const result = matcher(feed);

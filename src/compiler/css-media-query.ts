@@ -4,8 +4,7 @@ import { CSSBlock } from './css-block';
 export interface CSSMediaQuery extends ASTPosition {
   type: 'media';
   query: string;
-  blocks: CSSBlock[];
-  children: CSSMediaQuery[];
+  children: (CSSMediaQuery | CSSBlock)[];
 }
 
 export function createCSSMediaQuery(
@@ -15,7 +14,6 @@ export function createCSSMediaQuery(
   return {
     type: 'media',
     query,
-    blocks: [],
     children: [],
     start,
     end,

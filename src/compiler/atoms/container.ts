@@ -1,17 +1,21 @@
 import { Container } from '../../parser/rules/atom/container';
+import { BaseScreenValue, BASE_SCREEN } from '../../values/base/screen';
+import { BREAKPOINTS } from '../../values/breakpoints';
 import {
   getMedia, insertProperty, popMedia, pushMedia,
 } from '../css-context';
 import { CSSMediaQuery } from '../css-media-query';
-import { BREAKPOINTS } from '../variants/breakpoint';
 
-const CONTAINERS = {
-  [BREAKPOINTS.sm]: 'max-width: 640px;',
-  [BREAKPOINTS.md]: 'max-width: 768px;',
-  [BREAKPOINTS.lg]: 'max-width: 1024px;',
-  [BREAKPOINTS.xl]: 'max-width: 1280px;',
-  [BREAKPOINTS['2xl']]: 'max-width: 1536px;',
-};
+function createContainer() {
+  const properties: Record<string, string> = {};
+
+  for (const property of Object.keys(BASE_SCREEN)) {
+    properties[BREAKPOINTS[property as BaseScreenValue]] = `max-width: ${BASE_SCREEN[property as BaseScreenValue]};`;
+  }
+
+  return properties;
+}
+const CONTAINERS = createContainer();
 
 export default function createContainerProperty(atom: Container) {
   const medias: CSSMediaQuery[] = [];

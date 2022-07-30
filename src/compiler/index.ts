@@ -40,31 +40,17 @@ function serializeBlock(block: CSSBlock, level = 0) {
 function serializeMediaQuery(block: CSSMediaQuery, level = 0) {
   let result = '';
 
-  if (block.blocks.length || block.children.length) {
+  if (block.children.length) {
     if (level > 0) {
       result = `${indent(level - 1)}@media ${block.query} {\n`;
     }
-    if (block.blocks.length) {
-      let blockResult = '';
-      for (const blockChild of block.blocks) {
-        const serialized = serializeBlock(blockChild, level);
-        result = `${result}${serialized}`;
-        blockResult = `${blockResult}${serialized}`;
-        if (blockChild !== block.blocks[block.blocks.length - 1] && serialized !== '') {
-          result = `${result}\n`;
-        }
-      }
-      if (block.children.length && blockResult !== '') {
+    for (const blockChild of block.children) {
+      const serialized = blockChild.type === 'media'
+        ? serializeMediaQuery(blockChild, level + 1)
+        : serializeBlock(blockChild, level);
+      result = `${result}${serialized}`;
+      if (blockChild !== block.children[block.children.length - 1] && serialized !== '') {
         result = `${result}\n`;
-      }
-    }
-    if (block.children.length) {
-      for (const blockChild of block.children) {
-        const serialized = serializeMediaQuery(blockChild, level + 1);
-        result = `${result}${serialized}`;
-        if (blockChild !== block.children[block.children.length - 1] && serialized !== '') {
-          result = `${result}\n`;
-        }
       }
     }
     if (level > 0) {
@@ -87,19 +73,25 @@ function mergeBlock(instance: CSSBlock) {
 
 function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
   const blocks: Record<string, CSSBlock> = {};
+  const sequence: (CSSBlock | CSSMediaQuery)[] = [];
 
-  for (const block of instance.blocks) {
-    for (const selector of block.selectors) {
-      if (selector in blocks) {
-        const original = blocks[selector];
-        for (const property of block.properties) {
-          original.properties.push(property);
+  for (const block of instance.children) {
+    if (block.type === 'block') {
+      for (const selector of block.selectors) {
+        if (selector in blocks) {
+          const original = blocks[selector];
+          for (const property of block.properties) {
+            original.properties.push(property);
+          }
+        } else {
+          const newBlock = createCSSBlock([selector], block);
+          newBlock.properties = block.properties;
+          blocks[selector] = newBlock;
+          sequence.push(newBlock);
         }
-      } else {
-        const newBlock = createCSSBlock([selector], block);
-        newBlock.properties = block.properties;
-        blocks[selector] = newBlock;
       }
+    } else {
+      sequence.push(block);
     }
   }
 
@@ -107,25 +99,28 @@ function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
     mergeBlock(block);
   }
 
-  instance.blocks = Object.values(blocks);
+  instance.children = sequence;
 }
 
 function mergeMediaQuery(instance: CSSMediaQuery) {
   const queries: Record<string, CSSMediaQuery> = {};
+  const sequence: (CSSBlock | CSSMediaQuery)[] = [];
 
   for (const child of instance.children) {
-    mergeMediaQuery(child);
+    if (child.type === 'media') {
+      mergeMediaQuery(child);
 
-    if (child.query in queries) {
-      const original = queries[child.query];
-      for (const block of child.blocks) {
-        original.blocks.push(block);
-      }
-      for (const block of child.children) {
-        original.children.push(block);
+      if (child.query in queries) {
+        const original = queries[child.query];
+        for (const block of child.children) {
+          original.children.push(block);
+        }
+      } else {
+        queries[child.query] = child;
+        sequence.push(child);
       }
     } else {
-      queries[child.query] = child;
+      sequence.push(child);
     }
   }
 
@@ -133,7 +128,7 @@ function mergeMediaQuery(instance: CSSMediaQuery) {
     mergeMediaQueryBlocks(query);
   }
 
-  instance.children = Object.values(queries);
+  instance.children = sequence;
   mergeMediaQueryBlocks(instance);
 }
 
@@ -147,7 +142,7 @@ export default function compile(
   const topBlock = createCSSBlock([baseSelector], { start: 0, end: classnames.length });
   const topMedia = createCSSMediaQuery('', { start: 0, end: classnames.length });
 
-  topMedia.blocks.push(topBlock);
+  topMedia.children.push(topBlock);
 
   pushBlock(topBlock);
   pushMedia(topMedia);
@@ -160,7 +155,7 @@ export default function compile(
       const variantBlock = createVariant(getBlock().selectors, variant, options);
       if ('query' in variantBlock) {
         const newTopBlock = createCSSBlock(getBlock().selectors, variant);
-        variantBlock.blocks.push(newTopBlock);
+        variantBlock.children.push(newTopBlock);
         getMedia().children.push(variantBlock);
         pushMedia(variantBlock);
         pushBlock(newTopBlock);
@@ -168,7 +163,7 @@ export default function compile(
         popBlock();
         popMedia();
       } else {
-        getMedia().blocks.push(variantBlock);
+        getMedia().children.push(variantBlock);
         pushBlock(variantBlock);
         traverse(value);
         popBlock();
