@@ -60,11 +60,11 @@ export function pattern(value: string): Matcher<string> {
   return (feed) => {
     const peeked = lookFeed(feed);
     if (regexp.test(peeked)) {
-      const match = regexp.exec(peeked);
+      const result = regexp.exec(peeked);
       const { cursor } = feed;
-      if (match != null && eatFeed(feed, match[0])) {
+      if (result != null && eatFeed(feed, result[0])) {
         return {
-          value: match[0],
+          value: result[0],
           start: cursor,
           end: feed.cursor,
         };
@@ -147,4 +147,8 @@ export function optional<T>(matcher: Matcher<T>): Matcher<MatchResult<T> | null>
       end: feed.cursor,
     };
   };
+}
+
+export function match(map: Record<string, string>): Matcher<string>[] {
+  return Object.keys(map).map((item) => literal(item));
 }

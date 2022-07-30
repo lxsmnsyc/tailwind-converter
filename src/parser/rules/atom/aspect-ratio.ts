@@ -1,23 +1,20 @@
 import {
+  AspectRatioValue,
+  ASPECT_RATIO,
+} from '../../../values/aspect-ratio';
+import {
   alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type AspectRatioValue =
-  | 'aspect-auto'
-  | 'aspect-square'
-  | 'aspect-video';
 
 export interface AspectRatio extends MatchResult<AspectRatioValue> {
   type: 'aspect-ratio';
 }
 
 const matcher = alternation(
-  literal('aspect-auto'),
-  literal('aspect-square'),
-  literal('aspect-video'),
+  ...match(ASPECT_RATIO),
 );
 
 export default function aspectRatio(feed: Feed): AspectRatio | undefined {

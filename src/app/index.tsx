@@ -38,7 +38,7 @@ export default function App() {
 
   createEffect(() => {
     const result = compile(pendingBase(), pendingInput(), {
-      darkMode: 'class',
+      darkMode: '.dark',
     });
     setProcessedCSS(result.css);
     setProcessedAST(JSON.stringify(
@@ -67,26 +67,21 @@ export default function App() {
     <div class="p-4">
       <div class="gap-4 flex flex-col md:flex-row w-full h-full">
         <div class="flex flex-col space-y-2 w-full">
-          <span class="text-2xl font-bold">Enter your class</span>
-          <textarea
-            class="w-full rounded p-2 outline-none ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black"
-            onInput={(e) => {
-              const { value } = e.target as HTMLInputElement;
-              debouncedSetInput(value);
-              setInput(value);
-            }}
-            value={input()}
-          />
-          <span class="text-2xl font-bold">Enter your base selector</span>
-          <textarea
-            class="w-full rounded p-2 outline-none ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black"
-            onInput={(e) => {
-              const { value } = e.target as HTMLInputElement;
-              debouncedSetBase(value);
-              setBase(value);
-            }}
-            value={base()}
-          />
+          <div>
+            <span class="text-2xl font-bold">Class</span>
+            <textarea
+              class="w-full rounded p-2 outline-none ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black"
+              onInput={(e) => {
+                const { value } = e.target as HTMLInputElement;
+                debouncedSetInput(value);
+                setInput(value);
+              }}
+              value={input()}
+            />
+          </div>
+          <div>
+            <span class="text-xl font-bold">Options</span>
+          </div>
         </div>
         <div class="flex flex-col space-y-2 w-full max-h-[90vh]">
           <TabGroup class="flex w-full h-full flex-col space-y-2 relative" defaultValue="CSS" horizontal>
