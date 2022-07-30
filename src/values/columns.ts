@@ -1,4 +1,6 @@
-export const COLUMNS = {
+import createSortedMap from '../utils/sorted-map';
+
+export const COLUMNS = createSortedMap({
   'columns-1': 'columns: 1;',
   'columns-2': 'columns: 2;',
   'columns-3': 'columns: 3;',
@@ -25,6 +27,6 @@ export const COLUMNS = {
   'columns-5xl': 'columns: 64rem;',
   'columns-6xl': 'columns: 72rem;',
   'columns-7xl': 'columns: 80rem;',
-};
+});
 
 export type ColumnsValue = keyof typeof COLUMNS;

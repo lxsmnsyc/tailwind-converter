@@ -1,4 +1,6 @@
-export const DISPLAY = {
+import createSortedMap from '../utils/sorted-map';
+
+export const DISPLAY = createSortedMap({
   block: 'display: block;',
   'inline-block': 'display: inline-block;',
   inline: 'display: inline;',
@@ -20,6 +22,6 @@ export const DISPLAY = {
   contents: 'display: contents;',
   'list-item': 'display: list-item;',
   hidden: 'display: none;',
-};
+});
 
 export type DisplayValue = keyof typeof DISPLAY;
