@@ -1,22 +1,15 @@
+import { VISIBILITY, VisibilityValue } from '../../../values/visibility';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type VisibilityValue =
-  | 'visible'
-  | 'invisible';
 
 export interface Visibility extends MatchResult<VisibilityValue> {
   type: 'visibility';
 }
 
-const matcher = alternation(
-  literal('visible'),
-  literal('invisible'),
-);
+const matcher = match(VISIBILITY);
 
 export default function visibility(feed: Feed): Visibility | undefined {
   const result = matcher(feed);

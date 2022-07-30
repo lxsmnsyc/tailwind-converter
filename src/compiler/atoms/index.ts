@@ -24,6 +24,7 @@ import { OBJECT_POSITION } from '../../values/object-position';
 import { OVERFLOW } from '../../values/overflow';
 import { OVERSCROLL } from '../../values/overscroll';
 import { POSITION } from '../../values/position';
+import { VISIBILITY } from '../../values/visibility';
 import {
   insertProperty,
 } from '../css-context';
@@ -55,6 +56,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'bottom': return insertProperty(BOTTOM[atom.value], atom);
     case 'left': return insertProperty(LEFT[atom.value], atom);
     case 'right': return insertProperty(RIGHT[atom.value], atom);
+    case 'visibility': return insertProperty(VISIBILITY[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
