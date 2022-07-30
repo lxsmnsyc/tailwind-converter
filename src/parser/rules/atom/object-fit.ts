@@ -1,28 +1,15 @@
+import { ObjectFitValue, OBJECT_FIT } from '../../../values/object-fit';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type ObjectFitValue =
-  | 'object-contain'
-  | 'object-cover'
-  | 'object-fill'
-  | 'object-none'
-  | 'object-scale-down';
 
 export interface ObjectFit extends MatchResult<ObjectFitValue> {
   type: 'object-fit';
 }
 
-const matcher = alternation(
-  literal('object-contain'),
-  literal('object-cover'),
-  literal('object-fill'),
-  literal('object-none'),
-  literal('object-scale-down'),
-);
+const matcher = match(OBJECT_FIT);
 
 export default function objectFit(feed: Feed): ObjectFit | undefined {
   const result = matcher(feed);
