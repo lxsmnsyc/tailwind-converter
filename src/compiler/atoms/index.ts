@@ -12,6 +12,7 @@ import { FLOAT } from '../../values/float';
 import { ISOLATION } from '../../values/isolation';
 import { OBJECT_FIT } from '../../values/object-fit';
 import { OBJECT_POSITION } from '../../values/object-position';
+import { OVERFLOW } from '../../values/overflow';
 import {
   insertProperty,
 } from '../css-context';
@@ -33,6 +34,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'isolation': return insertProperty(ISOLATION[atom.value], atom);
     case 'object-fit': return insertProperty(OBJECT_FIT[atom.value], atom);
     case 'object-position': return insertProperty(OBJECT_POSITION[atom.value], atom);
+    case 'overflow': return insertProperty(OVERFLOW[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }

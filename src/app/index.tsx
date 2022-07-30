@@ -9,6 +9,7 @@ import compile from '../compiler';
 import classNames from '../utils/classnames';
 import ASTDisplay from './ASTDisplay';
 import Button from './Button';
+import Checkbox from './Checkbox';
 import CSSDisplay from './CSSDisplay';
 import TextInput from './TextInput';
 
@@ -51,6 +52,10 @@ export default function App() {
   const [pendingGroupSelector, setPendingGroupSelector] = createSignal(groupSelector());
   const [peerSelector, setPeerSelector] = createSignal('.peer');
   const [pendingPeerSelector, setPendingPeerSelector] = createSignal(peerSelector());
+  const [darkSelector, setDarkSelector] = createSignal('.dark');
+  const [pendingDarkSelector, setPendingDarkSelector] = createSignal(darkSelector());
+
+  const [darkFlag, setDarkFlag] = createSignal(false);
 
   const [processedCSS, setProcessedCSS] = createSignal('');
   const [processedAST, setProcessedAST] = createSignal('');
@@ -61,10 +66,11 @@ export default function App() {
   const debouncedSetBase = debounce(setPendingBase);
   const debouncedSetGroupSelector = debounce(setPendingGroupSelector);
   const debouncedSetPeerSelector = debounce(setPendingPeerSelector);
+  const debouncedSetDarkSelector = debounce(setPendingDarkSelector);
 
   createEffect(() => {
     const result = compile(pendingBase(), pendingInput(), {
-      darkMode: '.dark',
+      darkMode: darkFlag() ? pendingDarkSelector() : undefined,
       groupSelector: pendingGroupSelector(),
       peerSelector: pendingPeerSelector(),
     });
@@ -142,29 +148,38 @@ export default function App() {
                 value={peerSelector()}
               />
             </div>
+            <div class="flex flex-col space-y-1">
+              <span class="font-semibold flex-none">Dark Mode</span>
+              <div class="flex flex-row space-x-1">
+                <Checkbox
+                  onChange={setDarkFlag}
+                />
+                <TextInput
+                  onInput={(e) => {
+                    const { value } = e.target as HTMLInputElement;
+                    debouncedSetDarkSelector(value);
+                    setDarkSelector(value);
+                  }}
+                  value={darkSelector()}
+                  disabled={!!darkFlag()}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="preview">
         <TabGroup class="flex w-full h-full flex-col relative" defaultValue="CSS" horizontal>
-          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-lg relative" value="CSS">
+          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-xl relative" value="CSS">
             <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
             <Overlay loading={cssLoading() || pendingInput() !== input()} />
           </TabPanel>
-          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-lg relative" value="AST">
+          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-xl relative" value="AST">
             <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
-            <div
-              class={classNames(
-                'w-full h-full absolute top-0',
-                'transition duration-200 bg-gray-50',
-                'pointer-events-none',
-                (astLoading() || pendingInput() !== input()) ? 'opacity-50' : 'opacity-0',
-              )}
-            />
             <Overlay loading={astLoading() || pendingInput() !== input()} />
           </TabPanel>
-          <div class="absolute right-0 flex flex-none flex-row justify-between items-center">
-            <TabList class="flex flex-row space-x-2 bg-gray-50 rounded-b-lg p-2">
+          <div class="absolute right-8 flex flex-none flex-row justify-between items-center">
+            <TabList class="flex flex-row space-x-2 bg-white rounded-b-lg p-2">
               <Tab as={Button} size="small" value="CSS">CSS</Tab>
               <Tab as={Button} size="small" value="AST">AST</Tab>
             </TabList>
