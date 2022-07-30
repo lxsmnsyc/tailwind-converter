@@ -15,6 +15,7 @@ import { FLEX_GROW } from '../../values/flex-grow';
 import { FLEX_SHRINK } from '../../values/flex-shrink';
 import { FLEX_WRAP } from '../../values/flex-wrap';
 import { FLOAT } from '../../values/float';
+import { GRID_TEMPLATE_COLUMNS } from '../../values/grid-template-columns';
 import {
   BOTTOM,
   INSET,
@@ -73,6 +74,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'flex-shrink': return insertProperty(FLEX_SHRINK[atom.value], atom);
     case 'order': return insertProperty(ORDER[atom.value], atom);
     case 'z-index': return insertProperty(Z_INDEX[atom.value], atom);
+    case 'grid-template-columns': return insertProperty(GRID_TEMPLATE_COLUMNS[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }

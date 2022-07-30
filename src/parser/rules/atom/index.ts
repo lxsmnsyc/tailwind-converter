@@ -21,6 +21,7 @@ import flexGrow, { FlexGrow } from './flex-grow';
 import flexShrink, { FlexShrink } from './flex-shrink';
 import flexWrap, { FlexWrap } from './flex-wrap';
 import float, { Float } from './float';
+import gridTemplateColumns, { GridTemplateColumns } from './grid-template-columns';
 import inset, { Inset } from './inset';
 import insetX, { InsetX } from './inset-x';
 import insetY, { InsetY } from './inset-y';
@@ -71,7 +72,8 @@ export type AtomValue =
   | Flex
   | FlexGrow
   | FlexShrink
-  | Order;
+  | Order
+  | GridTemplateColumns;
 
 export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
@@ -86,6 +88,7 @@ const matcher = alternation(
   flexGrow,
   flexShrink,
   order,
+  gridTemplateColumns,
 
   aspectRatio,
   container,
