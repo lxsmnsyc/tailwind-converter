@@ -15,6 +15,7 @@ import { FLEX_GROW } from './flex-grow';
 import { FLEX_SHRINK } from './flex-shrink';
 import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
+import { GRID_COLUMN } from './grid-column';
 import { GRID_COLUMN_END } from './grid-column-end';
 import { GRID_COLUMN_START } from './grid-column-start';
 import { GRID_TEMPLATE_COLUMNS } from './grid-template-columns';
@@ -68,6 +69,7 @@ export const ATOMS = createSortedMap({
   ...FLEX_SHRINK,
   ...ORDER,
   ...GRID_TEMPLATE_COLUMNS,
+  ...GRID_COLUMN,
   ...GRID_COLUMN_START,
   ...GRID_COLUMN_END,
 });
