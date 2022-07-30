@@ -17,6 +17,7 @@ import display, { Display } from './display';
 import flex, { Flex } from './flex';
 import flexBasis, { FlexBasis } from './flex-basis';
 import flexDirection, { FlexDirection } from './flex-direction';
+import flexGrow, { FlexGrow } from './flex-grow';
 import flexWrap, { FlexWrap } from './flex-wrap';
 import float, { Float } from './float';
 import inset, { Inset } from './inset';
@@ -63,7 +64,8 @@ export type AtomValue =
   | FlexBasis
   | FlexDirection
   | FlexWrap
-  | Flex;
+  | Flex
+  | FlexGrow;
 
 export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
@@ -75,6 +77,7 @@ const matcher = alternation(
   flexDirection,
   flexWrap,
   flex,
+  flexGrow,
 
   aspectRatio,
   container,
