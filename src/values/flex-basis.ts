@@ -1,3 +1,4 @@
+import { sortKeys } from '../utils/sorted-map';
 import { BaseFlexBasisValue, BASE_FLEX_BASIS } from './base/flex-basis';
 
 type FlexBasisProperties = {
@@ -7,7 +8,7 @@ type FlexBasisProperties = {
 function createFlexBasis(): FlexBasisProperties {
   const properties: Record<string, string> = {};
 
-  const keys = Object.keys(BASE_FLEX_BASIS).sort((a, b) => b.length - a.length);
+  const keys = sortKeys(BASE_FLEX_BASIS);
 
   for (const property of keys) {
     properties[`basis-${property}`] = `flex-basis: ${BASE_FLEX_BASIS[property as BaseFlexBasisValue]};`;

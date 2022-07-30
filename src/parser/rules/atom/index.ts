@@ -28,6 +28,7 @@ import isolation, { Isolation } from './isolation';
 import left, { Left } from './left';
 import objectFit, { ObjectFit } from './object-fit';
 import objectPosition, { ObjectPosition } from './object-position';
+import order, { Order } from './order';
 import overflow, { Overflow } from './overflow';
 import overscroll, { Overscroll } from './overscroll';
 import position, { Position } from './position';
@@ -67,7 +68,8 @@ export type AtomValue =
   | FlexWrap
   | Flex
   | FlexGrow
-  | FlexShrink;
+  | FlexShrink
+  | Order;
 
 export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
@@ -81,6 +83,7 @@ const matcher = alternation(
   flex,
   flexGrow,
   flexShrink,
+  order,
 
   aspectRatio,
   container,

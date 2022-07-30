@@ -27,6 +27,7 @@ import {
 import { ISOLATION } from '../../values/isolation';
 import { OBJECT_FIT } from '../../values/object-fit';
 import { OBJECT_POSITION } from '../../values/object-position';
+import { ORDER } from '../../values/order';
 import { OVERFLOW } from '../../values/overflow';
 import { OVERSCROLL } from '../../values/overscroll';
 import { POSITION } from '../../values/position';
@@ -69,6 +70,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'flex': return insertProperty(FLEX[atom.value], atom);
     case 'flex-grow': return insertProperty(FLEX_GROW[atom.value], atom);
     case 'flex-shrink': return insertProperty(FLEX_SHRINK[atom.value], atom);
+    case 'order': return insertProperty(ORDER[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
