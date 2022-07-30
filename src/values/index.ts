@@ -19,6 +19,7 @@ import { GRID_COLUMN } from './grid-column';
 import { GRID_COLUMN_END } from './grid-column-end';
 import { GRID_COLUMN_START } from './grid-column-start';
 import { GRID_TEMPLATE_COLUMNS } from './grid-template-columns';
+import { GRID_TEMPLATE_ROWS } from './grid-template-rows';
 import {
   BOTTOM, INSET, INSET_X, INSET_Y, LEFT, RIGHT, TOP,
 } from './inset';
@@ -72,6 +73,7 @@ export const ATOMS = createSortedMap({
   ...GRID_COLUMN,
   ...GRID_COLUMN_START,
   ...GRID_COLUMN_END,
+  ...GRID_TEMPLATE_ROWS,
 });
 
 export type AtomValue = keyof typeof ATOMS;
