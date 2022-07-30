@@ -15,6 +15,7 @@ import { FLEX_GROW } from './flex-grow';
 import { FLEX_SHRINK } from './flex-shrink';
 import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
+import { GRID_COLUMN_END } from './grid-column-end';
 import { GRID_COLUMN_START } from './grid-column-start';
 import { GRID_TEMPLATE_COLUMNS } from './grid-template-columns';
 import {
@@ -31,24 +32,24 @@ import { VISIBILITY } from './visibility';
 import { Z_INDEX } from './z-index';
 
 export const ATOMS = createSortedMap({
+  // Layouts
   ...ASPECT_RATIO,
-  ...BOX_DECORATION,
-  ...BOX_SIZING,
+  container: '',
+  ...COLUMNS,
   ...BREAK_AFTER,
   ...BREAK_BEFORE,
   ...BREAK_INSIDE,
-  ...CLEAR,
-  ...COLUMNS,
+  ...BOX_DECORATION,
+  ...BOX_SIZING,
   ...DISPLAY,
-  ...FLEX_BASIS,
-  ...FLEX_DIRECTION,
-  ...FLEX_GROW,
-  ...FLEX_SHRINK,
-  ...FLEX_WRAP,
-  ...FLEX,
   ...FLOAT,
-  ...GRID_COLUMN_START,
-  ...GRID_TEMPLATE_COLUMNS,
+  ...CLEAR,
+  ...ISOLATION,
+  ...OBJECT_FIT,
+  ...OBJECT_POSITION,
+  ...OVERFLOW,
+  ...OVERSCROLL,
+  ...POSITION,
   ...INSET,
   ...INSET_X,
   ...INSET_Y,
@@ -56,16 +57,19 @@ export const ATOMS = createSortedMap({
   ...TOP,
   ...LEFT,
   ...RIGHT,
-  ...ISOLATION,
-  ...OBJECT_FIT,
-  ...OBJECT_POSITION,
-  ...ORDER,
-  ...OVERFLOW,
-  ...OVERSCROLL,
-  ...POSITION,
   ...VISIBILITY,
   ...Z_INDEX,
-  container: '',
+  // Flex and Grid
+  ...FLEX_BASIS,
+  ...FLEX_DIRECTION,
+  ...FLEX_WRAP,
+  ...FLEX,
+  ...FLEX_GROW,
+  ...FLEX_SHRINK,
+  ...ORDER,
+  ...GRID_TEMPLATE_COLUMNS,
+  ...GRID_COLUMN_START,
+  ...GRID_COLUMN_END,
 });
 
 export type AtomValue = keyof typeof ATOMS;

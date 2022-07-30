@@ -24,7 +24,9 @@ export default function parseClassnames(
     if (currentMatch) {
       result.push(currentMatch);
     } else {
-      throw new ParserError(feed.cursor, feed.size);
+      const nextBlank = classnames.indexOf(' ', feed.cursor);
+      const endCharacter = nextBlank !== -1 ? nextBlank : feed.size;
+      throw new ParserError(feed.cursor, endCharacter);
     }
   }
 
