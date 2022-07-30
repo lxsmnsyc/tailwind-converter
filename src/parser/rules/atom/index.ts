@@ -18,7 +18,7 @@ import isolation, { Isolation } from './isolation';
 import objectFit, { ObjectFit } from './object-fit';
 import objectPosition, { ObjectPosition } from './object-position';
 import overflow, { Overflow } from './overflow';
-import overflowBehavior, { OverflowBehavior } from './overflow-behavior';
+import overscroll, { Overscroll } from './overscroll';
 import position, { Position } from './position';
 import visibility, { Visibility } from './visibility';
 
@@ -38,7 +38,7 @@ export type AtomValue =
   | ObjectFit
   | ObjectPosition
   | Overflow
-  | OverflowBehavior
+  | Overscroll
   | Position
   | Visibility;
 
@@ -62,7 +62,7 @@ const matcher = alternation(
   objectFit,
   objectPosition,
   overflow,
-  overflowBehavior,
+  overscroll,
   position,
 
   visibility,

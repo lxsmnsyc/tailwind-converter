@@ -161,7 +161,7 @@ export default function App() {
                     setDarkSelector(value);
                   }}
                   value={darkSelector()}
-                  disabled={!!darkFlag()}
+                  disabled={!darkFlag()}
                 />
               </div>
             </div>
