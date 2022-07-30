@@ -2,7 +2,7 @@ import parseClassnames from '../parser';
 import { Atom } from '../parser/rules/atom';
 import { AtomWithVariant } from '../parser/rules/atom-with-variant';
 import createAtom from './atoms';
-import { createCSSBlock, CSSBlock } from './css-block';
+import { createCSSBlock, CSSBlock, CSSProperty } from './css-block';
 import {
   getBlock,
   getMedia,
@@ -71,9 +71,70 @@ function serializeMediaQuery(block: CSSMediaQuery, level = 0) {
       result = `${result}\n${indent(level - 1)}}`;
     }
   }
-
-  console.log(result);
   return result;
+}
+
+function mergeBlock(instance: CSSBlock) {
+  const properties: Record<string, CSSProperty> = {};
+
+  for (const property of instance.properties) {
+    const [key] = property.value.split(':');
+    properties[key] = property;
+  }
+
+  instance.properties = Object.values(properties);
+}
+
+function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
+  const blocks: Record<string, CSSBlock> = {};
+
+  for (const block of instance.blocks) {
+    for (const selector of block.selectors) {
+      if (selector in blocks) {
+        const original = blocks[selector];
+        for (const property of block.properties) {
+          original.properties.push(property);
+        }
+      } else {
+        const newBlock = createCSSBlock([selector], block);
+        newBlock.properties = block.properties;
+        blocks[selector] = newBlock;
+      }
+    }
+  }
+
+  for (const block of Object.values(blocks)) {
+    mergeBlock(block);
+  }
+
+  instance.blocks = Object.values(blocks);
+}
+
+function mergeMediaQuery(instance: CSSMediaQuery) {
+  const queries: Record<string, CSSMediaQuery> = {};
+
+  for (const child of instance.children) {
+    mergeMediaQuery(child);
+
+    if (child.query in queries) {
+      const original = queries[child.query];
+      for (const block of child.blocks) {
+        original.blocks.push(block);
+      }
+      for (const block of child.children) {
+        original.children.push(block);
+      }
+    } else {
+      queries[child.query] = child;
+    }
+  }
+
+  for (const query of Object.values(queries)) {
+    mergeMediaQueryBlocks(query);
+  }
+
+  instance.children = Object.values(queries);
+  mergeMediaQueryBlocks(instance);
 }
 
 export default function compile(
@@ -123,6 +184,8 @@ export default function compile(
 
   popMedia();
   popBlock();
+
+  mergeMediaQuery(topMedia);
 
   return {
     ast,
