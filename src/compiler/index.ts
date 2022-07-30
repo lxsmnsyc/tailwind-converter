@@ -27,69 +27,52 @@ function serializeBlock(block: CSSBlock, level = 0) {
       for (const property of block.properties) {
         result = `${result}${indent(level + 1)}${property.value}\n`;
       }
-      result = `${result}${indent(level)}}\n`;
+      result = `${result}${indent(level)}}`;
+      if (selector !== block.selectors[block.selectors.length - 1]) {
+        result = `${result}\n`;
+      }
     }
   }
 
   return result;
 }
 
-function serialize(block: CSSMediaQuery | CSSBlock, level = -1) {
-  if (level === -1) {
-    let result = '';
-
-    if (block.type === 'media') {
-      for (const child of block.blocks) {
-        const blockResult = serialize(child, 0);
-        result = `${result}${blockResult}`;
-        if (child !== block.blocks[block.blocks.length - 1] && blockResult !== '') {
-          result = `${result}\n`;
-        }
-      }
-      if (block.blocks.length && block.children.length) {
-        result = `${result}\n`;
-      }
-      for (const child of block.children) {
-        const blockResult = serialize(child, 0);
-        result = `${result}${blockResult}`;
-        if (child !== block.children[block.children.length - 1] && blockResult !== '') {
-          result = `${result}\n`;
-        }
-      }
-    } else {
-      result = serializeBlock(block, -1);
-    }
-
-    return result;
-  }
+function serializeMediaQuery(block: CSSMediaQuery, level = 0) {
   let result = '';
 
-  if (block.type === 'media') {
-    if (block.blocks.length || block.children.length) {
-      result = `${indent(level)}@media ${block.query} {\n`;
-      for (const child of block.blocks) {
-        const blockResult = serializeBlock(child, level + 1);
-        result = `${result}${blockResult}`;
-        if (child !== block.blocks[block.blocks.length - 1] && result !== '') {
+  if (block.blocks.length || block.children.length) {
+    if (level > 0) {
+      result = `${indent(level - 1)}@media ${block.query} {\n`;
+    }
+    if (block.blocks.length) {
+      let blockResult = '';
+      for (const blockChild of block.blocks) {
+        const serialized = serializeBlock(blockChild, level);
+        result = `${result}${serialized}`;
+        blockResult = `${blockResult}${serialized}`;
+        if (blockChild !== block.blocks[block.blocks.length - 1] && serialized !== '') {
           result = `${result}\n`;
         }
       }
-      if (block.blocks.length && block.children.length) {
+      if (block.children.length && blockResult !== '') {
         result = `${result}\n`;
       }
-      for (const child of block.children) {
-        const mediaResult = serialize(child, level + 1);
-        result = `${result}${mediaResult}`;
-        if (child !== block.children[block.children.length - 1] && result !== '') {
+    }
+    if (block.children.length) {
+      for (const blockChild of block.children) {
+        const serialized = serializeMediaQuery(blockChild, level + 1);
+        result = `${result}${serialized}`;
+        if (blockChild !== block.children[block.children.length - 1] && serialized !== '') {
           result = `${result}\n`;
         }
       }
-      result = `${result}${indent(level)}}\n`;
     }
-  } else {
-    result = serializeBlock(block, level);
+    if (level > 0) {
+      result = `${result}\n${indent(level - 1)}}`;
+    }
   }
 
+  console.log(result);
   return result;
 }
 
@@ -143,6 +126,6 @@ export default function compile(
 
   return {
     ast,
-    css: serialize(topMedia),
+    css: serializeMediaQuery(topMedia),
   };
 }
