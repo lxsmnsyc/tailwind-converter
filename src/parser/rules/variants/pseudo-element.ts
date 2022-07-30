@@ -1,12 +1,4 @@
-import createSortedMap from '../../../utils/sorted-map';
-import { Unwrap } from '../../../utils/unwrap';
-import {
-  Feed,
-  match,
-  MatchResult,
-} from '../../core';
-
-const SELECTORS = createSortedMap({
+export const PSEUDO_ELEMENT_VARIANT = {
   before: '',
   after: '',
   placeholder: '',
@@ -16,26 +8,10 @@ const SELECTORS = createSortedMap({
   'first-line': '',
   'first-letter': '',
   backdrop: '',
-});
+};
 
-export type PseudoElementValue = Unwrap<typeof SELECTORS>;
+export type PseudoElementVariantValue = keyof typeof PSEUDO_ELEMENT_VARIANT;
 
-export interface PseudoElement extends MatchResult<PseudoElementValue> {
-  type: 'variant:pseudo-element';
-}
-
-const matcher = match(SELECTORS);
-
-export default function pseudoElementVariant(feed: Feed): PseudoElement | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'variant:pseudo-element',
-      value: result.value as PseudoElementValue,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isPseudoElementVariant(value: string): value is PseudoElementVariantValue {
+  return value in PSEUDO_ELEMENT_VARIANT;
 }

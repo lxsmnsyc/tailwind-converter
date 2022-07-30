@@ -1,31 +1,10 @@
-import {
-  Feed,
-  literal,
-  MatchResult,
-  sequence,
-} from '../../core';
-import pseudoSelector, { PseudoSelector } from './pseudo-selector';
+import { createPropertiesMap } from '../../../utils/properties';
+import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
 
-export interface GroupVariant extends MatchResult<PseudoSelector> {
-  type: 'variant:group';
-  value: PseudoSelector;
-}
+export const GROUP_VARIANT = createPropertiesMap('group', '', PSEUDO_SELECTOR_VARIANT);
 
-const matcher = sequence(
-  literal('group-'),
-  pseudoSelector,
-);
+export type GroupVariantValue = keyof typeof GROUP_VARIANT;
 
-export default function groupVariant(feed: Feed): GroupVariant | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'variant:group',
-      value: result.value[1] as PseudoSelector,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isGroupVariant(value: string): value is GroupVariantValue {
+  return value in GROUP_VARIANT;
 }

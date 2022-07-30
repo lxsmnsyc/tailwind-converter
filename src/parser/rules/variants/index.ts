@@ -1,48 +1,47 @@
-import { alternation, Feed } from '../../core';
-import breakpointVariant, { Breakpoint } from './breakpoints';
-import darkVariant, { Dark } from './dark';
-import groupVariant, { GroupVariant } from './group-variant';
-import orientationVariant, { Orientation } from './orientation';
-import peerVariant, { PeerVariant } from './peer-variant';
-import prefersContrastVariant, { PrefersContrast } from './prefers-contrast';
-import prefersReducedMotionVariant, { PrefersReducedMotion } from './prefers-reduced-motion';
-import printVariant, { Print } from './print';
-import pseudoElementVariant, { PseudoElement } from './pseudo-element';
-import pseudoSelector, { PseudoSelector } from './pseudo-selector';
-import rtlVariant, { RTL } from './rtl';
+import createSortedMap from '../../../utils/sorted-map';
+import { BREAKPOINTS } from './breakpoints';
+import { Feed, match, MatchResult } from '../../core';
+import { GROUP_VARIANT } from './group-variant';
+import { ORIENTATION_VARIANT } from './orientation';
+import { PEER_VARIANT } from './peer-variant';
+import { PREFERS_CONTRAST_VARIANT } from './prefers-contrast';
+import { PREFERS_REDUCED_MOTION } from './prefers-reduced-motion';
+import { PSEUDO_ELEMENT_VARIANT } from './pseudo-element';
+import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
+import { RTL_VARIANT } from './rtl';
 
-export type Variant =
-  | PseudoSelector
-  | GroupVariant
-  | PeerVariant
-  | PseudoElement
-  | Breakpoint
-  | Dark
-  | Orientation
-  | PrefersContrast
-  | PrefersReducedMotion
-  | Print
-  | RTL;
+export const VARIANT = createSortedMap({
+  ...PSEUDO_SELECTOR_VARIANT,
+  ...BREAKPOINTS,
+  ...GROUP_VARIANT,
+  ...ORIENTATION_VARIANT,
+  ...PEER_VARIANT,
+  ...PREFERS_CONTRAST_VARIANT,
+  ...PREFERS_REDUCED_MOTION,
+  ...PSEUDO_ELEMENT_VARIANT,
+  ...RTL_VARIANT,
+  dark: '(prefers-color-scheme: dark)',
+  print: '',
+});
 
-const matcher = alternation(
-  groupVariant,
-  peerVariant,
-  pseudoElementVariant,
-  breakpointVariant,
-  darkVariant,
-  orientationVariant,
-  prefersReducedMotionVariant,
-  prefersContrastVariant,
-  printVariant,
-  rtlVariant,
-  pseudoSelector,
-);
+export type VariantValue = keyof typeof VARIANT;
+
+export interface Variant extends MatchResult<VariantValue> {
+  type: 'variant';
+}
+
+const matcher = match(VARIANT);
 
 export default function variant(feed: Feed): Variant | undefined {
   const result = matcher(feed);
 
   if (result) {
-    return result as Variant;
+    return {
+      type: 'variant',
+      value: result.value as VariantValue,
+      start: result.start,
+      end: result.end,
+    };
   }
   return undefined;
 }

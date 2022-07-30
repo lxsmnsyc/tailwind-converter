@@ -1,41 +1,17 @@
-import createSortedMap from '../../../../utils/sorted-map';
-import { Unwrap } from '../../../../utils/unwrap';
-import {
-  Feed,
-  match,
-  MatchResult,
-} from '../../../core';
+export const CHILDREN_VARIANT = {
+  first: 'first-child',
+  last: 'last-child',
+  odd: 'nth-child(odd)',
+  even: 'nth-child(even)',
+  only: 'only-child',
+  'first-of-type': 'first-of-type',
+  'last-of-type': 'last-of-type',
+  'only-of-type': 'only-of-type',
+  empty: 'empty',
+};
 
-const SELECTORS = createSortedMap({
-  first: '',
-  last: '',
-  odd: '',
-  even: '',
-  only: '',
-  'first-of-type': '',
-  'last-of-type': '',
-  'only-of-type': '',
-  empty: '',
-});
+export type ChildrenVariantValue = keyof typeof CHILDREN_VARIANT;
 
-type ChildrenValue = Unwrap<typeof SELECTORS>;
-
-export interface Children extends MatchResult<ChildrenValue> {
-  type: 'pseudo-selector:children';
-}
-
-const matcher = match(SELECTORS);
-
-export default function childrenPseudoSelector(feed: Feed): Children | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'pseudo-selector:children',
-      value: result.value as ChildrenValue,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isChildrenVariant(value: string): value is ChildrenVariantValue {
+  return value in CHILDREN_VARIANT;
 }

@@ -148,9 +148,7 @@ export default function compile(
   pushMedia(topMedia);
 
   function traverse(node: Atom | AtomWithVariant) {
-    if (node.type === 'atom') {
-      createAtom(node.value);
-    } else {
+    if (node.type === 'atom-with-variant') {
       const { variant, value } = node;
       const variantBlock = createVariant(getBlock().selectors, variant, options);
       if ('query' in variantBlock) {
@@ -168,6 +166,8 @@ export default function compile(
         traverse(value);
         popBlock();
       }
+    } else {
+      createAtom(node);
     }
   }
 

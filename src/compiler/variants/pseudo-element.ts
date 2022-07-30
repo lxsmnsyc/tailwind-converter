@@ -1,11 +1,13 @@
-import { PseudoElement } from '../../parser/rules/variants/pseudo-element';
+import { Variant } from '../../parser/rules/variants';
+import { PseudoElementVariantValue } from '../../parser/rules/variants/pseudo-element';
 import { CSSBlock, createCSSBlock } from '../css-block';
 
 export default function createPseudoElementBlock(
   base: string[],
-  variant: PseudoElement,
+  variant: Variant,
+  value: PseudoElementVariantValue,
 ): CSSBlock {
-  switch (variant.value) {
+  switch (value) {
     case 'after':
       return createCSSBlock(base.map((item) => `${item}::after`), variant);
     case 'backdrop': {

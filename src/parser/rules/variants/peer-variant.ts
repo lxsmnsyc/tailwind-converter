@@ -1,31 +1,10 @@
-import {
-  Feed,
-  literal,
-  MatchResult,
-  sequence,
-} from '../../core';
-import pseudoSelector, { PseudoSelector } from './pseudo-selector';
+import { createPropertiesMap } from '../../../utils/properties';
+import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
 
-export interface PeerVariant extends MatchResult<PseudoSelector> {
-  type: 'variant:peer';
-  value: PseudoSelector;
-}
+export const PEER_VARIANT = createPropertiesMap('peer', '', PSEUDO_SELECTOR_VARIANT);
 
-const matcher = sequence(
-  literal('peer-'),
-  pseudoSelector,
-);
+export type PeerVariantValue = keyof typeof PEER_VARIANT;
 
-export default function peerVariant(feed: Feed): PeerVariant | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'variant:peer',
-      value: result.value[1] as PseudoSelector,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isPeerVariant(value: string): value is PeerVariantValue {
+  return value in PSEUDO_SELECTOR_VARIANT;
 }

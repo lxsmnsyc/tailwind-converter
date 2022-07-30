@@ -1,34 +1,10 @@
-import createSortedMap from '../../../utils/sorted-map';
-import { Unwrap } from '../../../utils/unwrap';
-import {
-  Feed,
-  match,
-  MatchResult,
-} from '../../core';
+export const RTL_VARIANT = {
+  rtl: '[dir="rtl"]',
+  ltr: '[dir="ltr"]',
+};
 
-const SELECTORS = createSortedMap({
-  rtl: '',
-  ltr: '',
-});
+export type RTLVariantValue = keyof typeof RTL_VARIANT;
 
-export type RTLValue = Unwrap<typeof SELECTORS>;
-
-export interface RTL extends MatchResult<RTLValue> {
-  type: 'variant:rtl';
-}
-
-const matcher = match(SELECTORS);
-
-export default function rtlVariant(feed: Feed): RTL | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'variant:rtl',
-      value: result.value as RTLValue,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isRTLVariant(value: string): value is RTLVariantValue {
+  return value in RTL_VARIANT;
 }

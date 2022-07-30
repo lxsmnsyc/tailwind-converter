@@ -1,46 +1,24 @@
 import createSortedMap from '../../../../utils/sorted-map';
-import { Unwrap } from '../../../../utils/unwrap';
-import {
-  Feed,
-  match,
-  MatchResult,
-} from '../../../core';
 
-const SELECTORS = createSortedMap({
-  required: '',
-  optional: '',
-  valid: '',
-  invalid: '',
-  disabled: '',
-  enabled: '',
-  'read-only': '',
-  indeterminate: '',
-  checked: '',
-  default: '',
-  'in-range': '',
-  'out-of-range': '',
-  'placeholder-shown': '',
-  autofill: '',
+export const FORM_STATE_VARIANT = createSortedMap({
+  required: 'required',
+  optional: 'optional',
+  valid: 'valid',
+  invalid: 'invalid',
+  disabled: 'disabled',
+  enabled: 'enabled',
+  'read-only': 'read-only',
+  indeterminate: 'indeterminate',
+  checked: 'checked',
+  default: 'default',
+  'in-range': 'in-range',
+  'out-of-range': 'out-of-range',
+  'placeholder-shown': 'placeholder-shown',
+  autofill: 'autofill',
 });
 
-export type FormStateValue = Unwrap<typeof SELECTORS>;
+export type FormStateVariantValue = keyof typeof FORM_STATE_VARIANT;
 
-export interface FormState extends MatchResult<FormStateValue> {
-  type: 'pseudo-selector:form-state';
-}
-
-const matcher = match(SELECTORS);
-
-export default function formStatePseudoSelector(feed: Feed): FormState | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'pseudo-selector:form-state',
-      value: result.value as FormStateValue,
-      start: result.start,
-      end: result.end,
-    };
-  }
-  return undefined;
+export function isFormStateVariant(value: string): value is FormStateVariantValue {
+  return value in FORM_STATE_VARIANT;
 }

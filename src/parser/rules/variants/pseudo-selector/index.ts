@@ -1,27 +1,17 @@
-import { alternation, Feed } from '../../../core';
-import childrenPseudoSelector, { Children } from './children';
-import formStatePseudoSelector, { FormState } from './form-states';
-import openPseudoSelector, { Open } from './open';
-import statePseudoSelector, { State } from './states';
+import createSortedMap from '../../../../utils/sorted-map';
+import { CHILDREN_VARIANT } from './children';
+import { FORM_STATE_VARIANT } from './form-states';
+import { STATE_VARIANT } from './states';
 
-export type PseudoSelector =
-  | State
-  | Children
-  | FormState
-  | Open;
+export const PSEUDO_SELECTOR_VARIANT = createSortedMap({
+  ...CHILDREN_VARIANT,
+  ...FORM_STATE_VARIANT,
+  ...STATE_VARIANT,
+  open: '',
+});
 
-const matcher = alternation(
-  statePseudoSelector,
-  childrenPseudoSelector,
-  formStatePseudoSelector,
-  openPseudoSelector,
-);
+export type PseudoSelectorVariantValue = keyof typeof PSEUDO_SELECTOR_VARIANT;
 
-export default function pseudoSelector(feed: Feed): PseudoSelector | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return result as PseudoSelector;
-  }
-  return undefined;
+export function isPseudoSelectorVariant(value: string): value is PseudoSelectorVariantValue {
+  return value in PSEUDO_SELECTOR_VARIANT;
 }

@@ -1,6 +1,6 @@
-import { Container } from '../../parser/rules/atom/container';
+import { Atom } from '../../parser/rules/atom';
 import { BaseScreenValue, BASE_SCREEN } from '../../values/base/screen';
-import { BREAKPOINTS } from '../../values/breakpoints';
+import { BREAKPOINTS } from '../../parser/rules/variants/breakpoints';
 import {
   getMedia, insertProperty, popMedia, pushMedia,
 } from '../css-context';
@@ -17,7 +17,7 @@ function createContainer() {
 }
 const CONTAINERS = createContainer();
 
-export default function createContainerProperty(atom: Container) {
+export default function createContainerProperty(atom: Atom) {
   const medias: CSSMediaQuery[] = [];
 
   function reset() {

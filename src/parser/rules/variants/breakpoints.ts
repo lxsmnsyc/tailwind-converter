@@ -1,26 +1,23 @@
-import { BREAKPOINTS, BreakpointValue } from '../../../values/breakpoints';
-import {
-  Feed,
-  match,
-  MatchResult,
-} from '../../core';
+import { BaseScreenValue, BASE_SCREEN } from '../../../values/base/screen';
 
-export interface Breakpoint extends MatchResult<BreakpointValue> {
-  type: 'variant:breakpoint';
+type BreakpointProperties = {
+  [key in BaseScreenValue]: string;
 }
 
-const matcher = match(BREAKPOINTS);
+function createBreakpoints(): BreakpointProperties {
+  const properties: Record<string, string> = {};
 
-export default function breakpointVariant(feed: Feed): Breakpoint | undefined {
-  const result = matcher(feed);
-
-  if (result) {
-    return {
-      type: 'variant:breakpoint',
-      value: result.value as BreakpointValue,
-      start: result.start,
-      end: result.end,
-    };
+  for (const property of Object.keys(BASE_SCREEN)) {
+    properties[property] = `(min-width: ${BASE_SCREEN[property as BaseScreenValue]})`;
   }
-  return undefined;
+
+  return properties as BreakpointProperties;
+}
+
+export const BREAKPOINTS = createBreakpoints();
+
+export type BreakpointValue = keyof typeof BREAKPOINTS;
+
+export function isBreakpoint(value: string): value is BreakpointValue {
+  return value in BREAKPOINTS;
 }
