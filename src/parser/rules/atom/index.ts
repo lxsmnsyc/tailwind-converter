@@ -14,6 +14,7 @@ import clear, { Clear } from './clear';
 import columns, { Columns } from './columns';
 import container, { Container } from './container';
 import display, { Display } from './display';
+import flexBasis, { FlexBasis } from './flex-basis';
 import float, { Float } from './float';
 import inset, { Inset } from './inset';
 import insetX, { InsetX } from './inset-x';
@@ -54,7 +55,8 @@ export type AtomValue =
   | Bottom
   | Left
   | Right
-  | Visibility;
+  | Visibility
+  | FlexBasis;
 
 export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
@@ -86,6 +88,8 @@ const matcher = alternation(
   left,
   right,
   visibility,
+
+  flexBasis,
 );
 
 export default function atom(feed: Feed): Atom | undefined {

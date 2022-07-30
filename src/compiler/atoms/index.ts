@@ -8,6 +8,7 @@ import { BREAK_INSIDE } from '../../values/break-inside';
 import { CLEAR } from '../../values/clear';
 import { COLUMNS } from '../../values/columns';
 import { DISPLAY } from '../../values/display';
+import { FLEX_BASIS } from '../../values/flex-basis';
 import { FLOAT } from '../../values/float';
 import {
   BOTTOM,
@@ -57,6 +58,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'left': return insertProperty(LEFT[atom.value], atom);
     case 'right': return insertProperty(RIGHT[atom.value], atom);
     case 'visibility': return insertProperty(VISIBILITY[atom.value], atom);
+    case 'flex-basis': return insertProperty(FLEX_BASIS[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
