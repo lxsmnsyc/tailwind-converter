@@ -1,22 +1,15 @@
+import { BoxDecorationValue, BOX_DECORATION } from '../../../values/box-decoration';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type BoxDecorationValue =
-  | 'box-decoration-clone'
-  | 'box-decoration-slice';
 
 export interface BoxDecoration extends MatchResult<BoxDecorationValue> {
   type: 'box-decoration';
 }
 
-const matcher = alternation(
-  literal('box-decoration-clone'),
-  literal('box-decoration-slice'),
-);
+const matcher = match(BOX_DECORATION);
 
 export default function boxDecoration(feed: Feed): BoxDecoration | undefined {
   const result = matcher(feed);

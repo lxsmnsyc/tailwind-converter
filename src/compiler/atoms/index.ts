@@ -1,5 +1,6 @@
 import { AtomValue } from '../../parser/rules/atom';
 import createAspectRatioProperty from './aspect-ratio';
+import createBoxDecorationProperty from './box-decoration';
 import createBreakAfterProperty from './break-after';
 import createBreakBeforeProperty from './break-before';
 import createBreakInsideProperty from './break-inside';
@@ -25,6 +26,9 @@ export default function createAtom(atom: AtomValue): void {
       break;
     case 'break-inside':
       createBreakInsideProperty(atom);
+      break;
+    case 'box-decoration':
+      createBoxDecorationProperty(atom);
       break;
     default:
       throw new Error('Unknown type');
