@@ -7,5 +7,5 @@
 }
 
 .preview {
-  @apply w-full max-h-[50vh] md:w-[calc(50vw-2rem)] md:max-h-[calc(100vh-2rem)] flex-1 md:fixed md:top-0 md:right-0 md:m-4;
+  @apply w-full min-h-[25vh] max-h-[50vh] md:w-[calc(50vw-2rem)] md:max-h-[calc(100vh-2rem)] flex-1 md:fixed md:top-0 md:right-0 md:m-4;
 }

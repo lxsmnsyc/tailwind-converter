@@ -1,45 +1,32 @@
 import {
   alternation,
-  parse,
-  quantifier,
-  sequence,
+  createFeed,
+  moreFeed,
 } from './core';
-import blank from './rules/blank';
+import ParserError from './ParserError';
 import atom, { Atom } from './rules/atom';
 import atomWithVariant, { AtomWithVariant } from './rules/atom-with-variant';
 
 export default function parseClassnames(
   classnames: string,
-): (Atom | AtomWithVariant)[] | undefined {
-  const list = sequence(
-    alternation(
-      atom,
-      atomWithVariant,
-    ),
-    quantifier(
-      sequence(
-        blank,
-        alternation(
-          atom,
-          atomWithVariant,
-        ),
-      ),
-    ),
+): (Atom | AtomWithVariant)[] {
+  const matcher = alternation(
+    atomWithVariant,
+    atom,
   );
 
-  const result = parse(list, classnames);
-  if (result) {
-    const mappers = [result.value[0] as (Atom | AtomWithVariant)];
+  const result: (Atom | AtomWithVariant)[] = [];
 
-    if (result.value[1]) {
-      const item = result.value[1];
-      if (Array.isArray(item.value)) {
-        for (const mapper of item.value) {
-          mappers.push(mapper.value[1] as (Atom | AtomWithVariant));
-        }
-      }
+  const feed = createFeed(classnames);
+
+  while (moreFeed(feed)) {
+    const currentMatch = matcher(feed);
+    if (currentMatch) {
+      result.push(currentMatch);
+    } else {
+      throw new ParserError(feed.cursor, feed.size);
     }
-    return mappers;
   }
-  return undefined;
+
+  return result;
 }

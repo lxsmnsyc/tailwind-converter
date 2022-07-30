@@ -18,8 +18,8 @@ export default function atomWithVariant(feed: Feed): AtomWithVariant | undefined
     variant,
     literal(':'),
     alternation(
-      atom,
       atomWithVariant,
+      atom,
     ),
   );
 

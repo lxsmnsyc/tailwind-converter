@@ -26,6 +26,6 @@ export default function ASTDisplay(props: ASTDisplayProps): JSX.Element {
   });
 
   return (
-    <div ref={ref} />
+    <div class="h-full" ref={ref} />
   );
 }

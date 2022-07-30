@@ -26,6 +26,6 @@ export default function CSSDisplay(props: CSSDisplayProps): JSX.Element {
   });
 
   return (
-    <div ref={ref} />
+    <div class="h-full" ref={ref} />
   );
 }

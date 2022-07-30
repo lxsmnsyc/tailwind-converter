@@ -3,9 +3,11 @@ import {
   TabGroup,
   TabList,
   TabPanel,
+  Transition,
 } from 'solid-headless';
 import { createEffect, createSignal } from 'solid-js';
 import compile from '../compiler';
+import ParserError from '../parser/ParserError';
 import classNames from '../utils/classnames';
 import ASTDisplay from './ASTDisplay';
 import Button from './Button';
@@ -68,18 +70,34 @@ export default function App() {
   const debouncedSetPeerSelector = debounce(setPendingPeerSelector);
   const debouncedSetDarkSelector = debounce(setPendingDarkSelector);
 
+  const [error, setError] = createSignal<Error>();
+  const [hasError, setHasError] = createSignal(false);
+
+  let ref: HTMLTextAreaElement | undefined;
+
   createEffect(() => {
-    const result = compile(pendingBase(), pendingInput(), {
-      darkMode: darkFlag() ? pendingDarkSelector() : undefined,
-      groupSelector: pendingGroupSelector(),
-      peerSelector: pendingPeerSelector(),
-    });
-    setProcessedCSS(result.css);
-    setProcessedAST(JSON.stringify(
-      result.ast,
-      undefined,
-      2,
-    ));
+    try {
+      const result = compile(pendingBase(), pendingInput(), {
+        darkMode: darkFlag() ? pendingDarkSelector() : undefined,
+        groupSelector: pendingGroupSelector(),
+        peerSelector: pendingPeerSelector(),
+      });
+      setHasError(false);
+      setProcessedCSS(result.css);
+      setProcessedAST(JSON.stringify(
+        result.ast,
+        undefined,
+        2,
+      ));
+    } catch (err) {
+      setError(() => err);
+      setHasError(true);
+
+      if (ref && err instanceof ParserError) {
+        ref.focus();
+        ref.setSelectionRange(err.position, err.size, 'forward');
+      }
+    }
   });
 
   function onCSSLoad() {
@@ -104,7 +122,13 @@ export default function App() {
           <div class="flex flex-col space-y-2">
             <span class="text-2xl font-bold">Class</span>
             <textarea
-              class="w-full rounded p-2 outline-none ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black"
+              ref={ref}
+              class={classNames(
+                'w-full rounded p-2 outline-none font-mono font-semibold',
+                ' ring-2 ring-gray-300 dark:ring-gray-700 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400 dark:bg-black',
+                hasError() && 'selection:bg-red-500',
+              )}
+              spellcheck={false}
               onInput={(e) => {
                 const { value } = e.target as HTMLInputElement;
                 debouncedSetInput(value);
@@ -183,6 +207,23 @@ export default function App() {
             <Tab as={Button} size="small" value="AST">AST</Tab>
           </TabList>
         </div>
+        <Transition
+          show={hasError()}
+          class="absolute md:fixed bottom-4"
+          enter="ease-out duration-300"
+          enterFrom="opacity-0 scale-50 translate-y-full"
+          enterTo="opacity-100 scale-100 translate-y-0"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100 scale-100 translate-y-0"
+          leaveTo="opacity-0 scale-50  translate-y-full"
+          afterLeave={() => {
+            setError(undefined);
+          }}
+        >
+          <div class="bg-red-500 text-red-50 font-bold rounded-xl shadow-lg p-4">
+            {error()?.message}
+          </div>
+        </Transition>
       </TabGroup>
     </div>
   );
