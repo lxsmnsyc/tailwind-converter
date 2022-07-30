@@ -168,24 +168,22 @@ export default function App() {
           </div>
         </div>
       </div>
-      <div class="preview">
-        <TabGroup class="flex w-full h-full flex-col relative" defaultValue="CSS" horizontal>
-          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-xl relative" value="CSS">
-            <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
-            <Overlay loading={cssLoading() || pendingInput() !== input()} />
-          </TabPanel>
-          <TabPanel class="flex-1 w-full shadow-lg shadow-gray-900 h-full overflow-hidden rounded-xl relative" value="AST">
-            <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
-            <Overlay loading={astLoading() || pendingInput() !== input()} />
-          </TabPanel>
-          <div class="absolute right-8 flex flex-none flex-row justify-between items-center">
-            <TabList class="flex flex-row space-x-2 bg-white rounded-b-lg p-2">
-              <Tab as={Button} size="small" value="CSS">CSS</Tab>
-              <Tab as={Button} size="small" value="AST">AST</Tab>
-            </TabList>
-          </div>
-        </TabGroup>
-      </div>
+      <TabGroup class="preview shadow-lg shadow-gray-900 rounded-xl overflow-auto" defaultValue="CSS" horizontal>
+        <TabPanel class="w-full" value="CSS">
+          <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
+          <Overlay loading={cssLoading() || pendingInput() !== input()} />
+        </TabPanel>
+        <TabPanel class="w-full" value="AST">
+          <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
+          <Overlay loading={astLoading() || pendingInput() !== input()} />
+        </TabPanel>
+        <div class="absolute md:fixed right-8 flex flex-none flex-row justify-between items-center">
+          <TabList class="flex flex-row space-x-2 bg-white rounded-b-lg p-2">
+            <Tab as={Button} size="small" value="CSS">CSS</Tab>
+            <Tab as={Button} size="small" value="AST">AST</Tab>
+          </TabList>
+        </div>
+      </TabGroup>
     </div>
   );
 }

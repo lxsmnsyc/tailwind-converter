@@ -26,8 +26,6 @@ export default function CSSDisplay(props: CSSDisplayProps): JSX.Element {
   });
 
   return (
-    <div class="overflow-auto overflow-y-scroll rounded-lg h-full">
-      <div class="min-h-full" ref={ref} />
-    </div>
+    <div ref={ref} />
   );
 }

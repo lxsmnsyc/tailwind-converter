@@ -10,6 +10,7 @@ import { COLUMNS } from '../../values/columns';
 import { DISPLAY } from '../../values/display';
 import { FLEX_BASIS } from '../../values/flex-basis';
 import { FLEX_DIRECTION } from '../../values/flex-direction';
+import { FLEX_WRAP } from '../../values/flex-wrap';
 import { FLOAT } from '../../values/float';
 import {
   BOTTOM,
@@ -61,6 +62,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'visibility': return insertProperty(VISIBILITY[atom.value], atom);
     case 'flex-basis': return insertProperty(FLEX_BASIS[atom.value], atom);
     case 'flex-direction': return insertProperty(FLEX_DIRECTION[atom.value], atom);
+    case 'flex-wrap': return insertProperty(FLEX_WRAP[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
