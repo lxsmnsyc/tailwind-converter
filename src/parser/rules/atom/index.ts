@@ -35,6 +35,7 @@ import position, { Position } from './position';
 import right, { Right } from './right';
 import top, { Top } from './top';
 import visibility, { Visibility } from './visibility';
+import zIndex, { ZIndex } from './z-index';
 
 export type AtomValue =
   | AspectRatio
@@ -62,6 +63,7 @@ export type AtomValue =
   | Left
   | Right
   | Visibility
+  | ZIndex
   // Flexbox and Grid
   | FlexBasis
   | FlexDirection
@@ -110,6 +112,7 @@ const matcher = alternation(
   left,
   right,
   visibility,
+  zIndex,
 );
 
 export default function atom(feed: Feed): Atom | undefined {

@@ -32,6 +32,7 @@ import { OVERFLOW } from '../../values/overflow';
 import { OVERSCROLL } from '../../values/overscroll';
 import { POSITION } from '../../values/position';
 import { VISIBILITY } from '../../values/visibility';
+import { Z_INDEX } from '../../values/z-index';
 import {
   insertProperty,
 } from '../css-context';
@@ -71,6 +72,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'flex-grow': return insertProperty(FLEX_GROW[atom.value], atom);
     case 'flex-shrink': return insertProperty(FLEX_SHRINK[atom.value], atom);
     case 'order': return insertProperty(ORDER[atom.value], atom);
+    case 'z-index': return insertProperty(Z_INDEX[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
