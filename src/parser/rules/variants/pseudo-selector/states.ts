@@ -1,32 +1,28 @@
+import createSortedMap from '../../../../utils/sorted-map';
+import { Unwrap } from '../../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../../core';
 
-export type StateValue =
-  | 'hover'
-  | 'focus'
-  | 'active'
-  | 'visited'
-  | 'focus-within'
-  | 'focus-visible'
-  | 'target';
+const SELECTORS = createSortedMap({
+  hover: '',
+  focus: '',
+  active: '',
+  visited: '',
+  'focus-within': '',
+  'focus-visible': '',
+  target: '',
+});
+
+export type StateValue = Unwrap<typeof SELECTORS>;
 
 export interface State extends MatchResult<StateValue> {
   type: 'pseudo-selector:state';
 }
 
-const matcher = alternation(
-  literal('hover'),
-  literal('focus'),
-  literal('active'),
-  literal('visited'),
-  literal('focus-within'),
-  literal('focus-visible'),
-  literal('target'),
-);
+const matcher = match(SELECTORS);
 
 export default function statePseudoSelector(feed: Feed): State | undefined {
   const result = matcher(feed);

@@ -25,7 +25,6 @@ export type Variant =
   | RTL;
 
 const matcher = alternation(
-  pseudoSelector,
   groupVariant,
   peerVariant,
   pseudoElementVariant,
@@ -36,6 +35,7 @@ const matcher = alternation(
   prefersContrastVariant,
   printVariant,
   rtlVariant,
+  pseudoSelector,
 );
 
 export default function variant(feed: Feed): Variant | undefined {

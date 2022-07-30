@@ -1,36 +1,30 @@
+import createSortedMap from '../../../../utils/sorted-map';
+import { Unwrap } from '../../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../../core';
 
-export type ChildrenValue =
-  | 'first'
-  | 'last'
-  | 'odd'
-  | 'even'
-  | 'only'
-  | 'first-of-type'
-  | 'last-of-type'
-  | 'only-of-type'
-  | 'empty';
+const SELECTORS = createSortedMap({
+  first: '',
+  last: '',
+  odd: '',
+  even: '',
+  only: '',
+  'first-of-type': '',
+  'last-of-type': '',
+  'only-of-type': '',
+  empty: '',
+});
+
+type ChildrenValue = Unwrap<typeof SELECTORS>;
 
 export interface Children extends MatchResult<ChildrenValue> {
   type: 'pseudo-selector:children';
 }
 
-const matcher = alternation(
-  literal('first'),
-  literal('last'),
-  literal('odd'),
-  literal('even'),
-  literal('only'),
-  literal('first-of-type'),
-  literal('last-of-type'),
-  literal('only-of-type'),
-  literal('empty'),
-);
+const matcher = match(SELECTORS);
 
 export default function childrenPseudoSelector(feed: Feed): Children | undefined {
   const result = matcher(feed);

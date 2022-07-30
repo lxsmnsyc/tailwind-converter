@@ -1,22 +1,23 @@
+import createSortedMap from '../../../utils/sorted-map';
+import { Unwrap } from '../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
 
-export type PrefersReducedMotionValue =
-  | 'motion-reduce'
-  | 'motion-safe';
+const SELECTORS = createSortedMap({
+  'motion-reduce': '',
+  'motion-safe': '',
+});
+
+export type PrefersReducedMotionValue = Unwrap<typeof SELECTORS>;
 
 export interface PrefersReducedMotion extends MatchResult<PrefersReducedMotionValue> {
   type: 'variant:prefers-reduced-motion';
 }
 
-const matcher = alternation(
-  literal('motion-reduce'),
-  literal('motion-safe'),
-);
+const matcher = match(SELECTORS);
 
 export default function prefersReducedMotionVariant(feed: Feed): PrefersReducedMotion | undefined {
   const result = matcher(feed);

@@ -1,46 +1,35 @@
+import createSortedMap from '../../../../utils/sorted-map';
+import { Unwrap } from '../../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../../core';
 
-export type FormStateValue =
-  | 'required'
-  | 'optional'
-  | 'valid'
-  | 'invalid'
-  | 'disabled'
-  | 'enabled'
-  | 'read-only'
-  | 'indeterminate'
-  | 'checked'
-  | 'default'
-  | 'in-range'
-  | 'out-of-range'
-  | 'placeholder-shown'
-  | 'autofill';
+const SELECTORS = createSortedMap({
+  required: '',
+  optional: '',
+  valid: '',
+  invalid: '',
+  disabled: '',
+  enabled: '',
+  'read-only': '',
+  indeterminate: '',
+  checked: '',
+  default: '',
+  'in-range': '',
+  'out-of-range': '',
+  'placeholder-shown': '',
+  autofill: '',
+});
+
+export type FormStateValue = Unwrap<typeof SELECTORS>;
 
 export interface FormState extends MatchResult<FormStateValue> {
   type: 'pseudo-selector:form-state';
 }
 
-const matcher = alternation(
-  literal('required'),
-  literal('optional'),
-  literal('valid'),
-  literal('invalid'),
-  literal('disabled'),
-  literal('enabled'),
-  literal('read-only'),
-  literal('indeterminate'),
-  literal('checked'),
-  literal('default'),
-  literal('in-range'),
-  literal('out-of-range'),
-  literal('placeholder-shown'),
-  literal('autofill'),
-);
+const matcher = match(SELECTORS);
 
 export default function formStatePseudoSelector(feed: Feed): FormState | undefined {
   const result = matcher(feed);

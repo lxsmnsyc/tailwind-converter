@@ -1,22 +1,23 @@
+import createSortedMap from '../../../utils/sorted-map';
+import { Unwrap } from '../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
 
-export type RTLValue =
-  | 'rtl'
-  | 'ltr';
+const SELECTORS = createSortedMap({
+  rtl: '',
+  ltr: '',
+});
+
+export type RTLValue = Unwrap<typeof SELECTORS>;
 
 export interface RTL extends MatchResult<RTLValue> {
   type: 'variant:rtl';
 }
 
-const matcher = alternation(
-  literal('rtl'),
-  literal('ltr'),
-);
+const matcher = match(SELECTORS);
 
 export default function rtlVariant(feed: Feed): RTL | undefined {
   const result = matcher(feed);

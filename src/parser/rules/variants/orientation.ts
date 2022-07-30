@@ -1,22 +1,23 @@
+import createSortedMap from '../../../utils/sorted-map';
+import { Unwrap } from '../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
 
-export type OrientationValue =
-  | 'portrait'
-  | 'landscape';
+const SELECTORS = createSortedMap({
+  portrait: '',
+  landscape: '',
+});
+
+export type OrientationValue = Unwrap<typeof SELECTORS>;
 
 export interface Orientation extends MatchResult<OrientationValue> {
   type: 'variant:orientation';
 }
 
-const matcher = alternation(
-  literal('portrait'),
-  literal('landscape'),
-);
+const matcher = match(SELECTORS);
 
 export default function orientationVariant(feed: Feed): Orientation | undefined {
   const result = matcher(feed);

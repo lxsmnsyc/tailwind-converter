@@ -1,22 +1,23 @@
+import createSortedMap from '../../../utils/sorted-map';
+import { Unwrap } from '../../../utils/unwrap';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
 
-export type PrefersContrastValue =
-  | 'contrast-more'
-  | 'contrast-less';
+const SELECTORS = createSortedMap({
+  'contrast-more': '',
+  'contrast-less': '',
+});
+
+export type PrefersContrastValue = Unwrap<typeof SELECTORS>;
 
 export interface PrefersContrast extends MatchResult<PrefersContrastValue> {
   type: 'variant:prefers-contrast';
 }
 
-const matcher = alternation(
-  literal('contrast-more'),
-  literal('contrast-less'),
-);
+const matcher = match(SELECTORS);
 
 export default function prefersContrastVariant(feed: Feed): PrefersContrast | undefined {
   const result = matcher(feed);

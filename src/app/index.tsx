@@ -168,12 +168,12 @@ export default function App() {
           </div>
         </div>
       </div>
-      <TabGroup class="preview shadow-lg shadow-gray-900 rounded-xl overflow-auto" defaultValue="CSS" horizontal>
-        <TabPanel class="w-full" value="CSS">
+      <TabGroup class="preview flex shadow-lg shadow-gray-900 rounded-xl overflow-auto" defaultValue="CSS" horizontal>
+        <TabPanel class="flex-1 relative" value="CSS">
           <CSSDisplay onLoad={onCSSLoad} onSuccess={onCSSSuccess} value={processedCSS()} />
           <Overlay loading={cssLoading() || pendingInput() !== input()} />
         </TabPanel>
-        <TabPanel class="w-full" value="AST">
+        <TabPanel class="flex-1 relative" value="AST">
           <ASTDisplay onLoad={onASTLoad} onSuccess={onASTSuccess} value={processedAST()} />
           <Overlay loading={astLoading() || pendingInput() !== input()} />
         </TabPanel>
