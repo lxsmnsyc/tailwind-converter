@@ -27,7 +27,7 @@ export default function ASTDisplay(props: ASTDisplayProps): JSX.Element {
 
   return (
     <div class="overflow-auto overflow-y-scroll rounded-lg h-full">
-      <div ref={ref} />
+      <div class="min-h-full" ref={ref} />
     </div>
   );
 }

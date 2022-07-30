@@ -61,7 +61,7 @@ export default function createVariant(
       return createOrientationMediaQuery(variant);
     case 'variant:peer': {
       const baseSelector = createPseudoSelectorBlock([options.peerSelector ?? 'peer'], variant.value).selectors;
-      return createCSSBlock(base.map((item) => `${baseSelector[0]} ${item}`), variant);
+      return createCSSBlock(base.map((item) => `${baseSelector[0]} ~ ${item}`), variant);
     }
     case 'variant:prefers-contrast':
       return createPrefersContrastMediaQuery(variant);
