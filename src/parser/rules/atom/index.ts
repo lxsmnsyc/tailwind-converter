@@ -15,6 +15,7 @@ import columns, { Columns } from './columns';
 import container, { Container } from './container';
 import display, { Display } from './display';
 import flexBasis, { FlexBasis } from './flex-basis';
+import flexDirection, { FlexDirection } from './flex-direction';
 import float, { Float } from './float';
 import inset, { Inset } from './inset';
 import insetX, { InsetX } from './inset-x';
@@ -56,13 +57,19 @@ export type AtomValue =
   | Left
   | Right
   | Visibility
-  | FlexBasis;
+  // Flexbox and Grid
+  | FlexBasis
+  | FlexDirection;
 
 export interface Atom extends MatchResult<AtomValue> {
   type: 'atom';
 }
 
 const matcher = alternation(
+  // Flexbox and Grid
+  flexBasis,
+  flexDirection,
+
   aspectRatio,
   container,
   columns,
@@ -88,8 +95,6 @@ const matcher = alternation(
   left,
   right,
   visibility,
-
-  flexBasis,
 );
 
 export default function atom(feed: Feed): Atom | undefined {

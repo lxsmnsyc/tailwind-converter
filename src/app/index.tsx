@@ -44,7 +44,7 @@ function Overlay(props: OverlayProps) {
 }
 
 export default function App() {
-  const [input, setInput] = createSignal('aspect-square dark:lg:aspect-video object-left lg:object-right');
+  const [input, setInput] = createSignal('flex flex-col md:flex-row');
   const [pendingInput, setPendingInput] = createSignal(input());
   const [base, setBase] = createSignal('.my-class');
   const [pendingBase, setPendingBase] = createSignal(base());
