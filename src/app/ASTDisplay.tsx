@@ -17,7 +17,7 @@ export default function ASTDisplay(props: ASTDisplayProps): JSX.Element {
       const highlighter = await loadHighlighter();
       await highlighter.loadLanguage('json');
       const result = highlighter.codeToHtml(currentValue, {
-        theme: 'dark-plus',
+        theme: 'material-darker',
         lang: 'json',
       });
       ref.innerHTML = result;

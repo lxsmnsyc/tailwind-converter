@@ -17,7 +17,7 @@ export default function CSSDisplay(props: CSSDisplayProps): JSX.Element {
       const highlighter = await loadHighlighter();
       await highlighter.loadLanguage('css');
       const result = highlighter.codeToHtml(currentValue, {
-        theme: 'dark-plus',
+        theme: 'material-darker',
         lang: 'css',
       });
       ref.innerHTML = result;

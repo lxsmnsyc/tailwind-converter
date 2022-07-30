@@ -8,7 +8,7 @@ let HIGHLIGHTER: shiki.Highlighter;
 export default async function loadHighlighter() {
   if (!HIGHLIGHTER) {
     HIGHLIGHTER = await getHighlighter({
-      theme: 'dark-plus',
+      theme: 'material-darker',
       langs: ['css', 'json'],
     });
   }
