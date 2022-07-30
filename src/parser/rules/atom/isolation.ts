@@ -1,22 +1,15 @@
+import { ISOLATION, IsolationValue } from '../../../values/isolation';
 import {
-  alternation,
   Feed,
-  literal,
+  match,
   MatchResult,
 } from '../../core';
-
-export type IsolationValue =
-  | 'isolation'
-  | 'isolation-auto';
 
 export interface Isolation extends MatchResult<IsolationValue> {
   type: 'isolation';
 }
 
-const matcher = alternation(
-  literal('isolation'),
-  literal('isolation-auto'),
-);
+const matcher = match(ISOLATION);
 
 export default function isolation(feed: Feed): Isolation | undefined {
   const result = matcher(feed);
