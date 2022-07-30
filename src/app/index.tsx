@@ -25,7 +25,7 @@ function debounce<T extends any[]>(cb: (...args: T) => void, ms = 200) {
 }
 
 export default function App() {
-  const [input, setInput] = createSignal('aspect-square dark:lg:aspect-video');
+  const [input, setInput] = createSignal('aspect-square dark:lg:aspect-video object-left lg:object-right');
   const [pendingInput, setPendingInput] = createSignal(input());
   const [base, setBase] = createSignal('.my-class');
   const [pendingBase, setPendingBase] = createSignal(base());

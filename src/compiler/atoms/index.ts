@@ -11,6 +11,7 @@ import { DISPLAY } from '../../values/display';
 import { FLOAT } from '../../values/float';
 import { ISOLATION } from '../../values/isolation';
 import { OBJECT_FIT } from '../../values/object-fit';
+import { OBJECT_POSITION } from '../../values/object-position';
 import {
   insertProperty,
 } from '../css-context';
@@ -31,6 +32,7 @@ export default function createAtom(atom: AtomValue): void {
     case 'clear': return insertProperty(CLEAR[atom.value], atom);
     case 'isolation': return insertProperty(ISOLATION[atom.value], atom);
     case 'object-fit': return insertProperty(OBJECT_FIT[atom.value], atom);
+    case 'object-position': return insertProperty(OBJECT_POSITION[atom.value], atom);
     default:
       throw new Error('Unknown type');
   }
