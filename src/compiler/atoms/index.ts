@@ -2,13 +2,12 @@ import { AtomValue } from '../../parser/rules/atom';
 import createAspectRatioProperty from './aspect-ratio';
 import createBreakAfterProperty from './break-after';
 import createBreakBeforeProperty from './break-before';
+import createBreakInsideProperty from './break-inside';
 import createColumnsProperty from './columns';
 import createContainerProperty from './container';
 
 export default function createAtom(atom: AtomValue): void {
   switch (atom.type) {
-    case 'blank':
-      break;
     case 'aspect-ratio':
       createAspectRatioProperty(atom);
       break;
@@ -23,6 +22,9 @@ export default function createAtom(atom: AtomValue): void {
       break;
     case 'break-before':
       createBreakBeforeProperty(atom);
+      break;
+    case 'break-inside':
+      createBreakInsideProperty(atom);
       break;
     default:
       throw new Error('Unknown type');

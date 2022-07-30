@@ -1,10 +1,14 @@
-import { Feed, alternation, MatchResult } from '../../core';
+import {
+  Feed,
+  alternation,
+  MatchResult,
+} from '../../core';
 import aspectRatio, { AspectRatio } from './aspect-ratio';
-import blank, { Blank } from './blank';
 import boxDecoration, { BoxDecoration } from './box-decoration';
 import boxSizing, { BoxSizing } from './box-sizing';
 import breakAfter, { BreakAfter } from './break-after';
 import breakBefore, { BreakBefore } from './break-before';
+import breakInside, { BreakInside } from './break-inside';
 import clear, { Clear } from './clear';
 import columns, { Columns } from './columns';
 import container, { Container } from './container';
@@ -23,7 +27,7 @@ export type AtomValue =
   | Columns
   | BreakAfter
   | BreakBefore
-  | Blank
+  | BreakInside
   | BoxDecoration
   | BoxSizing
   | Display
@@ -46,6 +50,7 @@ const matcher = alternation(
   columns,
   breakAfter,
   breakBefore,
+  breakInside,
   boxDecoration,
   boxSizing,
   display,
@@ -58,8 +63,6 @@ const matcher = alternation(
   position,
 
   visibility,
-
-  blank,
 );
 
 export default function atom(feed: Feed): Atom | undefined {

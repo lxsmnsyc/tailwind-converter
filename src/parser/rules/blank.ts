@@ -2,7 +2,7 @@ import {
   Feed,
   MatchResult,
   pattern,
-} from '../../core';
+} from '../core';
 
 export interface Blank extends MatchResult<undefined> {
   type: 'blank';
