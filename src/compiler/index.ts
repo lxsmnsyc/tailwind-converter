@@ -1,4 +1,5 @@
 import parseClassnames from '../parser';
+import { CSSSelector } from '../parser/css-selector';
 import { Atom } from '../parser/rules/atom';
 import { AtomWithVariant } from '../parser/rules/atom-with-variant';
 import createAtom from './atoms';
@@ -16,6 +17,22 @@ import createVariant, { VariantOptions } from './variants';
 
 function indent(level = 0) {
   return '  '.repeat(level);
+}
+
+function serializeSelector(selector: CSSSelector) {
+  switch (selector.type) {
+    case 'class-selector': return `.${selector.value}`;
+    case 'id-selector': return `#${selector.value}`;
+    case 'type-selector': return selector.value;
+    case 'attribute-selector': {
+      const modifier = selector.modifier ? ` ${selector.modifier}` : '';
+      const matcher = selector.matcher ?? '';
+      const value = selector.value ?? '';
+      return `[${selector.property}${matcher}${value}${modifier}]`;
+    }
+    default:
+      throw new Error('Unexpected selector');
+  }
 }
 
 function serializeBlock(block: CSSBlock, level = 0) {
@@ -73,7 +90,7 @@ function mergeBlock(instance: CSSBlock) {
 
 function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
   const blocks: Record<string, CSSBlock> = {};
-  const sequence: (CSSBlock | CSSMediaQuery)[] = [];
+  const sequence = new Set<CSSBlock | CSSMediaQuery>();
 
   for (const block of instance.children) {
     if (block.type === 'block') {
@@ -83,15 +100,17 @@ function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
           for (const property of block.properties) {
             original.properties.push(property);
           }
+          sequence.delete(original);
+          sequence.add(original);
         } else {
           const newBlock = createCSSBlock([selector], block);
           newBlock.properties = block.properties;
           blocks[selector] = newBlock;
-          sequence.push(newBlock);
+          sequence.add(newBlock);
         }
       }
     } else {
-      sequence.push(block);
+      sequence.add(block);
     }
   }
 
@@ -99,12 +118,12 @@ function mergeMediaQueryBlocks(instance: CSSMediaQuery) {
     mergeBlock(block);
   }
 
-  instance.children = sequence;
+  instance.children = [...sequence];
 }
 
 function mergeMediaQuery(instance: CSSMediaQuery) {
   const queries: Record<string, CSSMediaQuery> = {};
-  const sequence: (CSSBlock | CSSMediaQuery)[] = [];
+  const sequence = new Set<CSSBlock | CSSMediaQuery>();
 
   for (const child of instance.children) {
     if (child.type === 'media') {
@@ -115,12 +134,14 @@ function mergeMediaQuery(instance: CSSMediaQuery) {
         for (const block of child.children) {
           original.children.push(block);
         }
+        sequence.delete(original);
+        sequence.add(original);
       } else {
         queries[child.query] = child;
-        sequence.push(child);
+        sequence.add(child);
       }
     } else {
-      sequence.push(child);
+      sequence.add(child);
     }
   }
 
@@ -128,23 +149,17 @@ function mergeMediaQuery(instance: CSSMediaQuery) {
     mergeMediaQueryBlocks(query);
   }
 
-  instance.children = sequence;
+  instance.children = [...sequence];
   mergeMediaQueryBlocks(instance);
 }
 
 export default function compile(
-  baseSelector: string,
   classnames: string,
   options: VariantOptions,
 ) {
   const ast = parseClassnames(classnames);
 
-  const topBlock = createCSSBlock([baseSelector], { start: 0, end: classnames.length });
   const topMedia = createCSSMediaQuery('', { start: 0, end: classnames.length });
-
-  topMedia.children.push(topBlock);
-
-  pushBlock(topBlock);
   pushMedia(topMedia);
 
   function traverse(node: Atom | AtomWithVariant) {
@@ -172,15 +187,24 @@ export default function compile(
   }
 
   if (ast) {
-    for (const result of ast) {
-      traverse(result);
+    for (const { selector, value } of ast) {
+      const selectorString = serializeSelector(selector);
+      const proxyMedia = createCSSMediaQuery('', selector);
+      pushMedia(proxyMedia);
+      const topBlock = createCSSBlock([selectorString], selector);
+      proxyMedia.children.push(topBlock);
+      pushBlock(topBlock);
+      for (const item of value.value) {
+        traverse(item);
+      }
+      popBlock();
+      popMedia();
+      mergeMediaQuery(proxyMedia);
+      topMedia.children = [...topMedia.children, ...proxyMedia.children];
     }
   }
 
   popMedia();
-  popBlock();
-
-  mergeMediaQuery(topMedia);
 
   return {
     ast,

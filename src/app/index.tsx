@@ -45,11 +45,13 @@ function Overlay(props: OverlayProps) {
   );
 }
 
+const EXAMPLE = `[href="a"] = flex flex-col md:flex-row;
+.b = flex flex-col md:flex-row;
+`;
+
 export default function App() {
-  const [input, setInput] = createSignal('flex flex-col md:flex-row');
+  const [input, setInput] = createSignal(EXAMPLE);
   const [pendingInput, setPendingInput] = createSignal(input());
-  const [base, setBase] = createSignal('.my-class');
-  const [pendingBase, setPendingBase] = createSignal(base());
   const [groupSelector, setGroupSelector] = createSignal('.group');
   const [pendingGroupSelector, setPendingGroupSelector] = createSignal(groupSelector());
   const [peerSelector, setPeerSelector] = createSignal('.peer');
@@ -65,7 +67,6 @@ export default function App() {
   const [astLoading, setASTLoading] = createSignal(false);
 
   const debouncedSetInput = debounce(setPendingInput, 1000);
-  const debouncedSetBase = debounce(setPendingBase);
   const debouncedSetGroupSelector = debounce(setPendingGroupSelector);
   const debouncedSetPeerSelector = debounce(setPendingPeerSelector);
   const debouncedSetDarkSelector = debounce(setPendingDarkSelector);
@@ -77,7 +78,7 @@ export default function App() {
 
   createEffect(() => {
     try {
-      const result = compile(pendingBase(), pendingInput(), {
+      const result = compile(pendingInput(), {
         darkMode: darkFlag() ? pendingDarkSelector() : undefined,
         groupSelector: pendingGroupSelector(),
         peerSelector: pendingPeerSelector(),
@@ -139,17 +140,6 @@ export default function App() {
           </div>
           <div class="flex flex-col space-y-2">
             <span class="text-xl font-bold">Options</span>
-            <div class="flex flex-col space-y-2">
-              <span class="font-semibold flex-none">Base Selector</span>
-              <TextInput
-                onInput={(e) => {
-                  const { value } = e.target as HTMLInputElement;
-                  debouncedSetBase(value);
-                  setBase(value);
-                }}
-                value={base()}
-              />
-            </div>
             <div class="flex flex-col space-y-2">
               <span class="font-semibold flex-none">Group Selector</span>
               <TextInput

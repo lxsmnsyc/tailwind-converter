@@ -138,7 +138,7 @@ export function optional<T>(matcher: Matcher<T>): Matcher<MatchResult<T> | null>
   return (feed) => {
     const { cursor } = feed;
     const result = matcher(feed);
-    if (result) {
+    if (!result) {
       feed.cursor = cursor;
     }
     return {
