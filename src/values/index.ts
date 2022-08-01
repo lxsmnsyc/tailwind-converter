@@ -33,6 +33,7 @@ import {
 import { ISOLATION } from './isolation';
 import { JUSTIFY_CONTENT } from './justify-content';
 import { JUSTIFY_ITEMS } from './justify-items';
+import { JUSTIFY_SELF } from './justify-self';
 import { OBJECT_FIT } from './object-fit';
 import { OBJECT_POSITION } from './object-position';
 import { ORDER } from './order';
@@ -94,6 +95,7 @@ export const ATOMS = createSortedMap({
   ...GAP_Y,
   ...JUSTIFY_CONTENT,
   ...JUSTIFY_ITEMS,
+  ...JUSTIFY_SELF,
 });
 
 export type AtomValue = keyof typeof ATOMS;
