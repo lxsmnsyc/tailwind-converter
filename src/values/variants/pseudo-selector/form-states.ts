@@ -1,6 +1,4 @@
-import createSortedMap from '../../../utils/sorted-map';
-
-export const FORM_STATE_VARIANT = createSortedMap({
+export const FORM_STATE_VARIANT = {
   required: 'required',
   optional: 'optional',
   valid: 'valid',
@@ -15,7 +13,7 @@ export const FORM_STATE_VARIANT = createSortedMap({
   'out-of-range': 'out-of-range',
   'placeholder-shown': 'placeholder-shown',
   autofill: 'autofill',
-});
+};
 
 export type FormStateVariantValue = keyof typeof FORM_STATE_VARIANT;
 

@@ -1,4 +1,3 @@
-import createSortedMap from '../utils/sorted-map';
 import { BaseInsetValue, BASE_INSET } from './base/inset';
 
 type InsetKey = 'left' | 'right' | 'top' | 'bottom' | 'inset' | 'inset-x' | 'inset-y';
@@ -57,7 +56,7 @@ function createInset<T extends InsetKey>(key: T): InsetProperty<T> {
       properties[`-${key}-${insetValue}`] = `${key}: -${value};`;
     }
   }
-  return createSortedMap(properties) as InsetProperty<T>;
+  return properties as InsetProperty<T>;
 }
 
 export const LEFT = createInset('left');

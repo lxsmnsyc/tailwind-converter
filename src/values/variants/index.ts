@@ -1,4 +1,3 @@
-import createSortedMap from '../../utils/sorted-map';
 import { BREAKPOINTS } from './breakpoints';
 import { Feed, match, MatchResult } from '../../parser/core';
 import { GROUP_VARIANT } from './group-variant';
@@ -10,7 +9,7 @@ import { PSEUDO_ELEMENT_VARIANT } from './pseudo-element';
 import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
 import { RTL_VARIANT } from './rtl';
 
-export const VARIANT = createSortedMap({
+export const VARIANT = {
   ...PSEUDO_SELECTOR_VARIANT,
   ...BREAKPOINTS,
   ...GROUP_VARIANT,
@@ -22,7 +21,7 @@ export const VARIANT = createSortedMap({
   ...RTL_VARIANT,
   dark: '(prefers-color-scheme: dark)',
   print: '',
-});
+};
 
 export type VariantValue = keyof typeof VARIANT;
 

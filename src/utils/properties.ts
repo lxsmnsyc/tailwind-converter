@@ -1,5 +1,3 @@
-import { sortKeys } from './sorted-map';
-
 export type PropertiesMap<Prefix extends string, Key extends string | number> = {
   [key in `${Prefix}-${Key}`]: string;
 }
@@ -15,9 +13,7 @@ export function createPropertiesMap<Prefix extends string, Key extends string | 
 ): PropertiesMap<Prefix, Key> {
   const properties: Record<string, string> = {};
 
-  const keys = sortKeys(baseValues);
-
-  for (const property of keys) {
+  for (const property of Object.keys(baseValues)) {
     properties[`${prefix}-${property}`] = `${css}: ${baseValues[property as Key]};`;
   }
 
@@ -31,9 +27,7 @@ export function createPropertiesMapMixed<Prefix extends string, Key extends stri
 ): PropertiesMapMixed<Prefix, Key> {
   const properties: Record<string, string[]> = {};
 
-  const keys = sortKeys(baseValues);
-
-  for (const property of keys) {
+  for (const property of Object.keys(baseValues)) {
     properties[`${prefix}-${property}`] = css.map((style) => `${style}: ${baseValues[property as Key]};`);
   }
 

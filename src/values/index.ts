@@ -1,4 +1,3 @@
-import createSortedMap from '../utils/sorted-map';
 import { ASPECT_RATIO } from './aspect-ratio';
 import { BOX_DECORATION } from './box-decoration';
 import { BOX_SIZING } from './box-sizing';
@@ -43,7 +42,7 @@ import { POSITION } from './position';
 import { VISIBILITY } from './visibility';
 import { Z_INDEX } from './z-index';
 
-export const ATOMS = createSortedMap({
+export const ATOMS = {
   // Layouts
   ...ASPECT_RATIO,
   container: '',
@@ -96,6 +95,6 @@ export const ATOMS = createSortedMap({
   ...JUSTIFY_CONTENT,
   ...JUSTIFY_ITEMS,
   ...JUSTIFY_SELF,
-});
+};
 
 export type AtomValue = keyof typeof ATOMS;
