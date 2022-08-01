@@ -1,71 +1,13 @@
-import { BaseInsetValue, BASE_INSET } from './base/inset';
+import { createSignedPropertiesMap, createSignedPropertiesMapMixed } from '../utils/properties';
+import { BASE_INSET } from './base/inset';
 
-type InsetKey = 'left' | 'right' | 'top' | 'bottom' | 'inset' | 'inset-x' | 'inset-y';
-
-type InsetProperty<T extends InsetKey> = {
-  [key in `${T | `-${T}`}-${BaseInsetValue}`]: string | string[];
-};
-
-function createInset<T extends InsetKey>(key: T): InsetProperty<T> {
-  const properties: Record<string, string | string[]> = {};
-
-  if (key === 'inset') {
-    for (const insetValue of Object.keys(BASE_INSET)) {
-      const value = BASE_INSET[insetValue as BaseInsetValue];
-      properties[`${key}-${insetValue}`] = [
-        `left: ${value};`,
-        `right: ${value};`,
-        `top: ${value};`,
-        `bottom: ${value};`,
-      ];
-      properties[`-${key}-${insetValue}`] = [
-        `left: -${value};`,
-        `right: -${value};`,
-        `top: -${value};`,
-        `bottom: -${value};`,
-      ];
-    }
-  } else if (key === 'inset-x') {
-    for (const insetValue of Object.keys(BASE_INSET)) {
-      const value = BASE_INSET[insetValue as BaseInsetValue];
-      properties[`${key}-${insetValue}`] = [
-        `left: ${value};`,
-        `right: ${value};`,
-      ];
-      properties[`-${key}-${insetValue}`] = [
-        `left: -${value};`,
-        `right: -${value};`,
-      ];
-    }
-  } else if (key === 'inset-y') {
-    for (const insetValue of Object.keys(BASE_INSET)) {
-      const value = BASE_INSET[insetValue as BaseInsetValue];
-      properties[`${key}-${insetValue}`] = [
-        `top: ${value};`,
-        `bottom: ${value};`,
-      ];
-      properties[`-${key}-${insetValue}`] = [
-        `top: -${value};`,
-        `bottom: -${value};`,
-      ];
-    }
-  } else {
-    for (const insetValue of Object.keys(BASE_INSET)) {
-      const value = BASE_INSET[insetValue as BaseInsetValue];
-      properties[`${key}-${insetValue}`] = `${key}: ${value};`;
-      properties[`-${key}-${insetValue}`] = `${key}: -${value};`;
-    }
-  }
-  return properties as InsetProperty<T>;
-}
-
-export const LEFT = createInset('left');
-export const RIGHT = createInset('right');
-export const TOP = createInset('top');
-export const BOTTOM = createInset('bottom');
-export const INSET = createInset('inset');
-export const INSET_X = createInset('inset-x');
-export const INSET_Y = createInset('inset-y');
+export const LEFT = createSignedPropertiesMap('left', 'left', BASE_INSET);
+export const RIGHT = createSignedPropertiesMap('right', 'right', BASE_INSET);
+export const TOP = createSignedPropertiesMap('top', 'top', BASE_INSET);
+export const BOTTOM = createSignedPropertiesMap('bottom', 'bottom', BASE_INSET);
+export const INSET = createSignedPropertiesMapMixed('inset', ['left', 'right', 'top', 'left'], BASE_INSET);
+export const INSET_X = createSignedPropertiesMapMixed('inset-x', ['left', 'right'], BASE_INSET);
+export const INSET_Y = createSignedPropertiesMapMixed('inset-y', ['top', 'left'], BASE_INSET);
 
 export type LeftValue = keyof typeof LEFT;
 export type RightValue = keyof typeof RIGHT;
