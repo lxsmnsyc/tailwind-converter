@@ -36,6 +36,7 @@ import { ISOLATION } from './isolation';
 import { JUSTIFY_CONTENT } from './justify-content';
 import { JUSTIFY_ITEMS } from './justify-items';
 import { JUSTIFY_SELF } from './justify-self';
+import { MARGIN } from './margin';
 import { OBJECT_FIT } from './object-fit';
 import { OBJECT_POSITION } from './object-position';
 import { ORDER } from './order';
@@ -109,6 +110,7 @@ export const ATOMS = {
 
   // Spacing
   ...PADDING,
+  ...MARGIN,
 };
 
 export type AtomValue = keyof typeof ATOMS;
