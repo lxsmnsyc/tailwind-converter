@@ -87,3 +87,16 @@ export function createSignedPropertiesMapMixed<Prefix extends string, Key extend
 
   return properties as SignedPropertiesMapMixed<Prefix, Key>;
 }
+
+export function createPrefixedMap<Prefix extends string, Key extends string>(
+  prefix: Prefix,
+  origin: Record<Key, string>,
+): Record<`${Prefix}${Key}`, string> {
+  const record: Record<string, string> = {};
+
+  for (const key of Object.keys(origin)) {
+    record[`${prefix}${key}`] = origin[key as Key];
+  }
+
+  return record as Record<`${Prefix}${Key}`, string>;
+}
