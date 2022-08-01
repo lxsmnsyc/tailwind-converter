@@ -41,6 +41,7 @@ import { OBJECT_POSITION } from './object-position';
 import { ORDER } from './order';
 import { OVERFLOW } from './overflow';
 import { OVERSCROLL } from './overscroll';
+import { PADDING } from './padding';
 import { PLACE_CONTENT } from './place-content';
 import { PLACE_ITEMS } from './place-items';
 import { PLACE_SELF } from './place-self';
@@ -107,6 +108,9 @@ export const ATOMS = {
   ...PLACE_CONTENT,
   ...PLACE_ITEMS,
   ...PLACE_SELF,
+
+  // Spacing
+  ...PADDING,
 };
 
 export type AtomValue = keyof typeof ATOMS;
