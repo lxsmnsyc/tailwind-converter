@@ -1,5 +1,5 @@
-import { Variant } from '../../parser/rules/variants';
-import { PseudoElementVariantValue } from '../../parser/rules/variants/pseudo-element';
+import { Variant } from '../../values/variants';
+import { PseudoElementVariantValue } from '../../values/variants/pseudo-element';
 import { CSSBlock, createCSSBlock } from '../css-block';
 
 export default function createPseudoElementBlock(

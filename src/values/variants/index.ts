@@ -1,6 +1,6 @@
-import createSortedMap from '../../../utils/sorted-map';
+import createSortedMap from '../../utils/sorted-map';
 import { BREAKPOINTS } from './breakpoints';
-import { Feed, match, MatchResult } from '../../core';
+import { Feed, match, MatchResult } from '../../parser/core';
 import { GROUP_VARIANT } from './group-variant';
 import { ORIENTATION_VARIANT } from './orientation';
 import { PEER_VARIANT } from './peer-variant';

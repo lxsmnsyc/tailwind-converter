@@ -1,22 +1,21 @@
-import { ATOMS, AtomValue } from '../../../values';
 import {
   Feed,
-  match,
   MatchResult,
-} from '../../core';
+  pattern,
+} from '../core';
 
-export interface Atom extends MatchResult<AtomValue> {
+export interface Atom extends MatchResult<string> {
   type: 'atom';
 }
 
-const matcher = match(ATOMS);
+const matcher = pattern('[^:;\\s]+');
 
 export default function atom(feed: Feed): Atom | undefined {
   const result = matcher(feed);
   if (result) {
     return {
       type: 'atom',
-      value: result.value as AtomValue,
+      value: result.value,
       start: result.start,
       end: result.end,
     };

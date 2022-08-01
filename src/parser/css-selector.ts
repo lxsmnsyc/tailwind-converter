@@ -1,6 +1,5 @@
 import {
   MatchResult,
-  Feed,
   pattern,
   sequence,
   literal,
@@ -8,25 +7,13 @@ import {
   createFeed,
 } from './core';
 import ParserError from './ParserError';
-
-// Rules
-const Hex = '[0-9a-fA-F]';
-const NewlineOrSpace = '(\\r\\n)|[ \\t\\r\\n\\f]';
-const Unicode = `\\\\${Hex}${Hex}?${Hex}?${Hex}?${Hex}?${Hex}(${NewlineOrSpace})`;
-const Escape = `(${Unicode})|(\\\\[^\\r\\n\\f0-9a-fA-F])`;
-const Nonascii = '[^\\u0000-\\u007f]';
-const Nmstart = `[_a-zA-Z]|${Nonascii}|(${Escape})`;
-const Nmchar = `[_a-zA-Z0-9\\-]|${Nonascii}|(${Escape})`;
-const Identifier = `-?(${Nmstart})(${Nmchar})*`;
-const Name = `(${Nmchar})+`;
-const NewLine = '\\n|(\\r\\n)|\\r|\\f';
-const BaseString = `([^\\n\\r\\f\\"]|\\\\${NewLine}|${Nonascii}|(${Escape}))*`;
-const SingleQuote = `'${BaseString}'`;
-const DoubleQuote = `"${BaseString}"`;
-const StringExpr = `(${SingleQuote})|(${DoubleQuote})`;
-const Space = '[ \\t\\r\\n\\f]+';
-const Whitespace = `(${Space})*`;
-const AttrMatcher = '[~|\\^$*]?=';
+import {
+  Identifier,
+  AttrMatcher,
+  Whitespace,
+  StringExpr,
+  Name,
+} from './tokens';
 
 const ident = pattern(Identifier);
 
@@ -81,16 +68,17 @@ interface AttributeSelector extends MatchResult<string | undefined | null> {
 export type CSSSelector = IdSelector | ClassSelector | TypeSelector | AttributeSelector;
 
 export default function cssSelector(
-  feed: Feed,
+  { value, start, end }: MatchResult<string>,
 ): CSSSelector {
+  const feed = createFeed(value);
   const idResult = idSelector(feed);
 
   if (idResult) {
     return {
       type: 'id-selector',
       value: idResult.value[1].value,
-      start: idResult.start,
-      end: idResult.end,
+      start,
+      end,
     };
   }
   const classResult = classSelector(feed);
@@ -99,8 +87,8 @@ export default function cssSelector(
     return {
       type: 'class-selector',
       value: classResult.value[1].value,
-      start: classResult.start,
-      end: classResult.end,
+      start,
+      end,
     };
   }
 
@@ -110,8 +98,8 @@ export default function cssSelector(
     return {
       type: 'type-selector',
       value: typeResult.value,
-      start: typeResult.start,
-      end: typeResult.end,
+      start,
+      end,
     };
   }
 
@@ -126,10 +114,10 @@ export default function cssSelector(
       matcher: afterProperty.value?.[0]?.value as string | null,
       value: afterProperty.value?.[2]?.value as string | null,
       modifier: afterProperty.value?.[4]?.value as string | null,
-      start: attrResult.start,
-      end: attrResult.end,
+      start,
+      end,
     };
   }
 
-  throw new ParserError(feed);
+  throw new ParserError('CSS Selector', start, end);
 }

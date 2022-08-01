@@ -1,0 +1,24 @@
+const Hex = '[0-9a-fA-F]';
+const NewlineOrSpace = '(\\r\\n)|[ \\t\\r\\n\\f]';
+const Unicode = `\\\\${Hex}${Hex}?${Hex}?${Hex}?${Hex}?${Hex}(${NewlineOrSpace})`;
+const Escape = `(${Unicode})|(\\\\[^\\r\\n\\f0-9a-fA-F])`;
+const Nonascii = '[^\\u0000-\\u007f]';
+const Nmstart = `[_a-zA-Z]|${Nonascii}|(${Escape})`;
+const Nmchar = `[_a-zA-Z0-9\\-]|${Nonascii}|(${Escape})`;
+export const Identifier = `-?(${Nmstart})(${Nmchar})*`;
+export const Name = `(${Nmchar})+`;
+const NewLine = '\\n|(\\r\\n)|\\r|\\f';
+const BaseString = `([^\\n\\r\\f\\"]|\\\\${NewLine}|${Nonascii}|(${Escape}))*`;
+const SingleQuote = `'${BaseString}'`;
+const DoubleQuote = `"${BaseString}"`;
+export const StringExpr = `(${SingleQuote})|(${DoubleQuote})`;
+const Space = '[ \\t\\r\\n\\f]+';
+export const Whitespace = `(${Space})*`;
+export const AttrMatcher = '[~|\\^$*]?=';
+
+const AttributeValue = `(${StringExpr})|(${Identifier})`;
+const AttributePart = `(${AttrMatcher})\\s*(${AttributeValue})\\s*[is]?\\s*`;
+const AttributeSelector = `\\[\\s*(${Identifier})\\s*(${AttributePart})\\]`;
+const IdSelector = `#(${Name})`;
+const ClassSelector = `\\.(${Identifier})`;
+export const Selector = `(${AttributeSelector})|(${IdSelector})|(${ClassSelector})`;

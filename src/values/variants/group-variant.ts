@@ -1,4 +1,4 @@
-import { createPropertiesMap } from '../../../utils/properties';
+import { createPropertiesMap } from '../../utils/properties';
 import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
 
 export const GROUP_VARIANT = createPropertiesMap('group', '', PSEUDO_SELECTOR_VARIANT);

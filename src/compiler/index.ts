@@ -1,7 +1,5 @@
-import parseClassnames from '../parser';
+import parseClassnames, { Atom, VariantAtom } from '../parser';
 import { CSSSelector } from '../parser/css-selector';
-import { Atom } from '../parser/rules/atom';
-import { AtomWithVariant } from '../parser/rules/atom-with-variant';
 import createAtom from './atoms';
 import { createCSSBlock, CSSBlock, CSSProperty } from './css-block';
 import {
@@ -162,7 +160,7 @@ export default function compile(
   const topMedia = createCSSMediaQuery('', { start: 0, end: classnames.length });
   pushMedia(topMedia);
 
-  function traverse(node: Atom | AtomWithVariant) {
+  function traverse(node: Atom | VariantAtom) {
     if (node.type === 'atom-with-variant') {
       const { variant, value } = node;
       const variantBlock = createVariant(getBlock().selectors, variant, options);
@@ -187,14 +185,14 @@ export default function compile(
   }
 
   if (ast) {
-    for (const { selector, value } of ast) {
-      const selectorString = serializeSelector(selector);
-      const proxyMedia = createCSSMediaQuery('', selector);
+    for (const { classlist, value } of ast) {
+      const selectorString = serializeSelector(value);
+      const proxyMedia = createCSSMediaQuery('', value);
       pushMedia(proxyMedia);
-      const topBlock = createCSSBlock([selectorString], selector);
+      const topBlock = createCSSBlock([selectorString], value);
       proxyMedia.children.push(topBlock);
       pushBlock(topBlock);
-      for (const item of value.value) {
+      for (const item of classlist.value) {
         traverse(item);
       }
       popBlock();

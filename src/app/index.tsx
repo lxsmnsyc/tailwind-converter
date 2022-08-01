@@ -96,7 +96,7 @@ export default function App() {
 
       if (ref && err instanceof ParserError) {
         ref.focus();
-        ref.setSelectionRange(err.position, err.size, 'forward');
+        ref.setSelectionRange(err.start, err.end, 'forward');
       }
     }
   });

@@ -1,4 +1,4 @@
-import createSortedMap from '../../../../utils/sorted-map';
+import createSortedMap from '../../../utils/sorted-map';
 
 export const FORM_STATE_VARIANT = createSortedMap({
   required: 'required',

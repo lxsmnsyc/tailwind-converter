@@ -1,4 +1,4 @@
-import { BaseScreenValue, BASE_SCREEN } from '../../../values/base/screen';
+import { BaseScreenValue, BASE_SCREEN } from '../base/screen';
 
 type BreakpointProperties = {
   [key in BaseScreenValue]: string;

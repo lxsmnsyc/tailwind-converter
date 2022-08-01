@@ -1,6 +1,6 @@
 import { Atom } from '../../parser/rules/atom';
 import { BaseScreenValue, BASE_SCREEN } from '../../values/base/screen';
-import { BREAKPOINTS } from '../../parser/rules/variants/breakpoints';
+import { BREAKPOINTS } from '../../values/variants/breakpoints';
 import {
   getMedia, insertProperty, popMedia, pushMedia,
 } from '../css-context';

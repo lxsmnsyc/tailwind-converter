@@ -1,19 +1,19 @@
-import { VARIANT, Variant } from '../../parser/rules/variants';
-import { isGroupVariant } from '../../parser/rules/variants/group-variant';
-import { isPseudoSelectorVariant, PseudoSelectorVariantValue } from '../../parser/rules/variants/pseudo-selector';
-import { CHILDREN_VARIANT, isChildrenVariant } from '../../parser/rules/variants/pseudo-selector/children';
-import { FORM_STATE_VARIANT, isFormStateVariant } from '../../parser/rules/variants/pseudo-selector/form-states';
-import { isStateVariant, STATE_VARIANT } from '../../parser/rules/variants/pseudo-selector/states';
-import { BREAKPOINTS, isBreakpoint } from '../../parser/rules/variants/breakpoints';
+import { VARIANT, Variant } from '../../values/variants';
+import { isGroupVariant } from '../../values/variants/group-variant';
+import { isPseudoSelectorVariant, PseudoSelectorVariantValue } from '../../values/variants/pseudo-selector';
+import { CHILDREN_VARIANT, isChildrenVariant } from '../../values/variants/pseudo-selector/children';
+import { FORM_STATE_VARIANT, isFormStateVariant } from '../../values/variants/pseudo-selector/form-states';
+import { isStateVariant, STATE_VARIANT } from '../../values/variants/pseudo-selector/states';
+import { BREAKPOINTS, isBreakpoint } from '../../values/variants/breakpoints';
 import { createCSSBlock, CSSBlock } from '../css-block';
 import { createCSSMediaQuery, CSSMediaQuery } from '../css-media-query';
 import createPseudoElementBlock from './pseudo-element';
-import { isOrientationVariant, ORIENTATION_VARIANT } from '../../parser/rules/variants/orientation';
-import { isPeerVariant } from '../../parser/rules/variants/peer-variant';
-import { isPrefersContrastVariant, PREFERS_CONTRAST_VARIANT } from '../../parser/rules/variants/prefers-contrast';
-import { isPrefersReducedMotionVariant, PREFERS_REDUCED_MOTION } from '../../parser/rules/variants/prefers-reduced-motion';
-import { isPseudoElementVariant } from '../../parser/rules/variants/pseudo-element';
-import { isRTLVariant, RTL_VARIANT } from '../../parser/rules/variants/rtl';
+import { isOrientationVariant, ORIENTATION_VARIANT } from '../../values/variants/orientation';
+import { isPeerVariant } from '../../values/variants/peer-variant';
+import { isPrefersContrastVariant, PREFERS_CONTRAST_VARIANT } from '../../values/variants/prefers-contrast';
+import { isPrefersReducedMotionVariant, PREFERS_REDUCED_MOTION } from '../../values/variants/prefers-reduced-motion';
+import { isPseudoElementVariant } from '../../values/variants/pseudo-element';
+import { isRTLVariant, RTL_VARIANT } from '../../values/variants/rtl';
 
 export interface VariantOptions {
   darkMode?: string;

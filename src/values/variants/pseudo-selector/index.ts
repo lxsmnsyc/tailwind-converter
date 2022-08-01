@@ -1,4 +1,4 @@
-import createSortedMap from '../../../../utils/sorted-map';
+import createSortedMap from '../../../utils/sorted-map';
 import { CHILDREN_VARIANT } from './children';
 import { FORM_STATE_VARIANT } from './form-states';
 import { STATE_VARIANT } from './states';

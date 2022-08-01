@@ -1,67 +1,40 @@
 import {
   alternation,
-  character,
   Feed,
   MatchResult,
-  moreFeed,
+  pattern,
+  quantifier,
+  sequence,
 } from './core';
-import ParserError from './ParserError';
 import atom, { Atom } from './rules/atom';
 import atomWithVariant, { AtomWithVariant } from './rules/atom-with-variant';
-import blank from './rules/blank';
 
-export interface ClassList extends MatchResult<(Atom | AtomWithVariant)[]> {
-  type: 'classlist';
+export interface ClassList extends MatchResult<(AtomWithVariant | Atom)[]> {
+  type: 'class-list';
 }
 
-const matcher = alternation(
-  atomWithVariant,
-  atom,
+const matcher = quantifier(
+  sequence(
+    alternation(
+      atomWithVariant,
+      atom,
+    ),
+    pattern('(\\s+|(\\s*;))'),
+  ),
+  1,
 );
 
-export default function classlist(
-  feed: Feed,
-): ClassList {
-  const result: (Atom | AtomWithVariant)[] = [];
+export default function classlist(feed: Feed): ClassList | undefined {
+  const result = matcher(feed);
 
-  const start = feed.cursor;
-
-  while (moreFeed(feed)) {
-    const currentMatch = matcher(feed);
-    if (currentMatch) {
-      result.push(currentMatch);
-
-      const isWhitespace = blank(feed);
-      if (!isWhitespace) {
-        const isTerminator = character(';')(feed);
-        if (isTerminator) {
-          return {
-            type: 'classlist',
-            value: result,
-            start,
-            end: feed.cursor,
-          };
-        }
-        throw new ParserError(feed);
-      }
-    } else {
-      const isTerminator = character(';')(feed);
-      if (isTerminator) {
-        return {
-          type: 'classlist',
-          value: result,
-          start,
-          end: feed.cursor,
-        };
-      }
-      throw new ParserError(feed);
-    }
+  if (result) {
+    return {
+      type: 'class-list',
+      value: result.value.map((item) => item.value[0]) as (AtomWithVariant | Atom)[],
+      start: result.start,
+      end: result.end,
+    };
   }
 
-  return {
-    type: 'classlist',
-    value: result,
-    start,
-    end: feed.cursor,
-  };
+  return undefined;
 }

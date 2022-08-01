@@ -1,4 +1,4 @@
-import { createPropertiesMap } from '../../../utils/properties';
+import { createPropertiesMap } from '../../utils/properties';
 import { PSEUDO_SELECTOR_VARIANT } from './pseudo-selector';
 
 export const PEER_VARIANT = createPropertiesMap('peer', '', PSEUDO_SELECTOR_VARIANT);
