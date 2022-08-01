@@ -17,7 +17,7 @@ import { FLEX_GROW } from './flex-grow';
 import { FLEX_SHRINK } from './flex-shrink';
 import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
-import { GAP, GAP_X, GAP_Y } from './gap';
+import { GAP } from './gap';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
 import { GRID_AUTO_FLOW } from './grid-auto-flow';
 import { GRID_AUTO_ROWS } from './grid-auto-rows';
@@ -97,8 +97,6 @@ export const ATOMS = {
   ...GRID_AUTO_COLUMNS,
   ...GRID_AUTO_ROWS,
   ...GAP,
-  ...GAP_X,
-  ...GAP_Y,
   ...JUSTIFY_CONTENT,
   ...JUSTIFY_ITEMS,
   ...JUSTIFY_SELF,
