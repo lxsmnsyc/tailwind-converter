@@ -29,6 +29,7 @@ import { GRID_ROW_END } from './grid-row-end';
 import { GRID_ROW_START } from './grid-row-start';
 import { GRID_TEMPLATE_COLUMNS } from './grid-template-columns';
 import { GRID_TEMPLATE_ROWS } from './grid-template-rows';
+import { HEIGHT } from './height';
 import {
   BOTTOM, INSET, INSET_X, INSET_Y, LEFT, RIGHT, TOP,
 } from './inset';
@@ -121,6 +122,7 @@ export const ATOMS = {
   ...WIDTH,
   ...MIN_WIDTH,
   ...MAX_WIDTH,
+  ...HEIGHT,
 };
 
 export type AtomValue = keyof typeof ATOMS;

@@ -125,8 +125,6 @@ function mergeMediaQuery(instance: CSSMediaQuery) {
 
   for (const child of instance.children) {
     if (child.type === 'media') {
-      mergeMediaQuery(child);
-
       if (child.query in queries) {
         const original = queries[child.query];
         for (const block of child.children) {
@@ -144,7 +142,7 @@ function mergeMediaQuery(instance: CSSMediaQuery) {
   }
 
   for (const query of Object.values(queries)) {
-    mergeMediaQueryBlocks(query);
+    mergeMediaQuery(query);
   }
 
   instance.children = [...sequence];
