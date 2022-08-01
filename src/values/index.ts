@@ -41,6 +41,7 @@ import { OBJECT_POSITION } from './object-position';
 import { ORDER } from './order';
 import { OVERFLOW } from './overflow';
 import { OVERSCROLL } from './overscroll';
+import { PLACE_CONTENT } from './place-content';
 import { POSITION } from './position';
 import { VISIBILITY } from './visibility';
 import { Z_INDEX } from './z-index';
@@ -101,6 +102,7 @@ export const ATOMS = {
   ...ALIGN_CONTENT,
   ...ALIGN_ITEMS,
   ...ALIGN_SELF,
+  ...PLACE_CONTENT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
