@@ -47,6 +47,7 @@ import { PLACE_CONTENT } from './place-content';
 import { PLACE_ITEMS } from './place-items';
 import { PLACE_SELF } from './place-self';
 import { POSITION } from './position';
+import { SPACE_BETWEEN } from './space-between';
 import { VISIBILITY } from './visibility';
 import { Z_INDEX } from './z-index';
 
@@ -111,6 +112,7 @@ export const ATOMS = {
   // Spacing
   ...PADDING,
   ...MARGIN,
+  ...SPACE_BETWEEN,
 };
 
 export type AtomValue = keyof typeof ATOMS;

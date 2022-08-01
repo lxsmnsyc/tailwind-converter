@@ -20,15 +20,33 @@ export function createPropertiesMap<Prefix extends string, Key extends string | 
   return properties as PropertiesMap<Prefix, Key>;
 }
 
-export function createPropertiesMapMixed<Prefix extends string, Key extends string | number>(
+export function createPropertiesMapMixed<
+  Prefix extends string,
+  Key extends string | number,
+  Properties extends string
+>(
   prefix: Prefix,
-  css: string[],
+  css: Properties[],
   baseValues: Record<Key, string>,
+  transform?: Record<Properties, (property: string, value: string) => string>,
 ): PropertiesMapMixed<Prefix, Key> {
   const properties: Record<string, string[]> = {};
 
-  for (const property of Object.keys(baseValues)) {
-    properties[`${prefix}-${property}`] = css.map((style) => `${style}: ${baseValues[property as Key]};`);
+  if (transform) {
+    for (const property of Object.keys(baseValues)) {
+      properties[`${prefix}-${property}`] = css.map((style) => {
+        if (style in transform) {
+          return transform[style](style, baseValues[property as Key]);
+        }
+        return `${style}: ${baseValues[property as Key]};`;
+      });
+    }
+  } else {
+    for (const property of Object.keys(baseValues)) {
+      properties[`${prefix}-${property}`] = css.map((style) => (
+        `${style}: ${baseValues[property as Key]};`
+      ));
+    }
   }
 
   return properties as PropertiesMapMixed<Prefix, Key>;
