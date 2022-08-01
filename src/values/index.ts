@@ -17,6 +17,7 @@ import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
 import { GRID_AUTO_FLOW } from './grid-auto-flow';
+import { GRID_AUTO_ROWS } from './grid-auto-rows';
 import { GRID_COLUMN } from './grid-column';
 import { GRID_COLUMN_END } from './grid-column-end';
 import { GRID_COLUMN_START } from './grid-column-start';
@@ -84,6 +85,7 @@ export const ATOMS = createSortedMap({
   ...GRID_ROW_END,
   ...GRID_AUTO_FLOW,
   ...GRID_AUTO_COLUMNS,
+  ...GRID_AUTO_ROWS,
 });
 
 export type AtomValue = keyof typeof ATOMS;
