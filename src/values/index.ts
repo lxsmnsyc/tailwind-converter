@@ -93,6 +93,7 @@ export const ATOMS = createSortedMap({
   ...GAP_X,
   ...GAP_Y,
   ...JUSTIFY_CONTENT,
+  ...JUSTIFY_ITEMS,
 });
 
 export type AtomValue = keyof typeof ATOMS;
