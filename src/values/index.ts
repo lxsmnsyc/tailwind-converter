@@ -1,4 +1,5 @@
 import { ALIGN_CONTENT } from './align-content';
+import { ALIGN_ITEMS } from './align-items';
 import { ASPECT_RATIO } from './aspect-ratio';
 import { BOX_DECORATION } from './box-decoration';
 import { BOX_SIZING } from './box-sizing';
@@ -97,6 +98,7 @@ export const ATOMS = {
   ...JUSTIFY_ITEMS,
   ...JUSTIFY_SELF,
   ...ALIGN_CONTENT,
+  ...ALIGN_ITEMS,
 };
 
 export type AtomValue = keyof typeof ATOMS;
