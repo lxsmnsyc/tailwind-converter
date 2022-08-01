@@ -43,6 +43,7 @@ import { OVERFLOW } from './overflow';
 import { OVERSCROLL } from './overscroll';
 import { PLACE_CONTENT } from './place-content';
 import { PLACE_ITEMS } from './place-items';
+import { PLACE_SELF } from './place-self';
 import { POSITION } from './position';
 import { VISIBILITY } from './visibility';
 import { Z_INDEX } from './z-index';
@@ -105,6 +106,7 @@ export const ATOMS = {
   ...ALIGN_SELF,
   ...PLACE_CONTENT,
   ...PLACE_ITEMS,
+  ...PLACE_SELF,
 };
 
 export type AtomValue = keyof typeof ATOMS;
