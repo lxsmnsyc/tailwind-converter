@@ -1,11 +1,11 @@
 export const STATE_VARIANT = {
-  hover: '',
-  focus: '',
-  active: '',
-  visited: '',
-  'focus-within': '',
-  'focus-visible': '',
-  target: '',
+  hover: 'hover',
+  focus: 'focus',
+  active: 'active',
+  visited: 'visited',
+  'focus-within': 'focus-within',
+  'focus-visible': 'focus-visible',
+  target: 'target',
 };
 
 export type StateVariantValue = keyof typeof STATE_VARIANT;
