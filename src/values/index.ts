@@ -31,6 +31,8 @@ import {
   BOTTOM, INSET, INSET_X, INSET_Y, LEFT, RIGHT, TOP,
 } from './inset';
 import { ISOLATION } from './isolation';
+import { JUSTIFY_CONTENT } from './justify-content';
+import { JUSTIFY_ITEMS } from './justify-items';
 import { OBJECT_FIT } from './object-fit';
 import { OBJECT_POSITION } from './object-position';
 import { ORDER } from './order';
@@ -90,6 +92,7 @@ export const ATOMS = createSortedMap({
   ...GAP,
   ...GAP_X,
   ...GAP_Y,
+  ...JUSTIFY_CONTENT,
 });
 
 export type AtomValue = keyof typeof ATOMS;
