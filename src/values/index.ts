@@ -63,6 +63,7 @@ import { PLACE_ITEMS } from './place-items';
 import { PLACE_SELF } from './place-self';
 import { POSITION } from './position';
 import { SPACE_BETWEEN } from './space-between';
+import { TEXT_ALIGN } from './text-align';
 import { VISIBILITY } from './visibility';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
@@ -149,6 +150,7 @@ export const ATOMS = {
   ...LINE_HEIGHT,
   ...LIST_STYLE_TYPE,
   ...LIST_STYLE_POSITION,
+  ...TEXT_ALIGN,
 };
 
 export type AtomValue = keyof typeof ATOMS;
