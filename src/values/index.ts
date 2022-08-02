@@ -45,6 +45,7 @@ import { JUSTIFY_ITEMS } from './justify-items';
 import { JUSTIFY_SELF } from './justify-self';
 import { LETTER_SPACING } from './letter-spacing';
 import { LINE_HEIGHT } from './line-height';
+import { LIST_STYLE_TYPE } from './list-style-type';
 import { MARGIN } from './margin';
 import { MAX_HEIGHT } from './max-height';
 import { MAX_WIDTH } from './max-width';
@@ -145,6 +146,7 @@ export const ATOMS = {
   ...FONT_VARIANT_NUMERIC,
   ...LETTER_SPACING,
   ...LINE_HEIGHT,
+  ...LIST_STYLE_TYPE,
 };
 
 export type AtomValue = keyof typeof ATOMS;
