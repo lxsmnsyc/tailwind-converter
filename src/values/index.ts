@@ -39,6 +39,7 @@ import { JUSTIFY_ITEMS } from './justify-items';
 import { JUSTIFY_SELF } from './justify-self';
 import { MARGIN } from './margin';
 import { MAX_WIDTH } from './max-width';
+import { MIN_HEIGHT } from './min-height';
 import { MIN_WIDTH } from './min-width';
 import { OBJECT_FIT } from './object-fit';
 import { OBJECT_POSITION } from './object-position';
@@ -123,6 +124,7 @@ export const ATOMS = {
   ...MIN_WIDTH,
   ...MAX_WIDTH,
   ...HEIGHT,
+  ...MIN_HEIGHT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
