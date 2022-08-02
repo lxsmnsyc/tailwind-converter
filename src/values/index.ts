@@ -17,6 +17,7 @@ import { FLEX_GROW } from './flex-grow';
 import { FLEX_SHRINK } from './flex-shrink';
 import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
+import { FONT_FAMILY } from './font-family';
 import { GAP } from './gap';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
 import { GRID_AUTO_FLOW } from './grid-auto-flow';
@@ -127,6 +128,9 @@ export const ATOMS = {
   ...HEIGHT,
   ...MIN_HEIGHT,
   ...MAX_HEIGHT,
+
+  // Typegraphy
+  ...FONT_FAMILY,
 };
 
 export type AtomValue = keyof typeof ATOMS;
