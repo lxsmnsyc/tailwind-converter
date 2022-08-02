@@ -21,6 +21,7 @@ import { FONT_FAMILY } from './font-family';
 import { FONT_SIZE } from './font-size';
 import { FONT_SMOOTHING } from './font-smoothing';
 import { FONT_STYLE } from './font-style';
+import { FONT_WEIGHT } from './font-weight';
 import { GAP } from './gap';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
 import { GRID_AUTO_FLOW } from './grid-auto-flow';
@@ -137,6 +138,7 @@ export const ATOMS = {
   ...FONT_SIZE,
   ...FONT_SMOOTHING,
   ...FONT_STYLE,
+  ...FONT_WEIGHT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
