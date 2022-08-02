@@ -18,6 +18,7 @@ import { FLEX_SHRINK } from './flex-shrink';
 import { FLEX_WRAP } from './flex-wrap';
 import { FLOAT } from './float';
 import { FONT_FAMILY } from './font-family';
+import { FONT_SIZE } from './font-size';
 import { GAP } from './gap';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
 import { GRID_AUTO_FLOW } from './grid-auto-flow';
@@ -131,6 +132,7 @@ export const ATOMS = {
 
   // Typegraphy
   ...FONT_FAMILY,
+  ...FONT_SIZE,
 };
 
 export type AtomValue = keyof typeof ATOMS;
