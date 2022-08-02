@@ -38,6 +38,7 @@ import { JUSTIFY_CONTENT } from './justify-content';
 import { JUSTIFY_ITEMS } from './justify-items';
 import { JUSTIFY_SELF } from './justify-self';
 import { MARGIN } from './margin';
+import { MAX_HEIGHT } from './max-height';
 import { MAX_WIDTH } from './max-width';
 import { MIN_HEIGHT } from './min-height';
 import { MIN_WIDTH } from './min-width';
@@ -125,6 +126,7 @@ export const ATOMS = {
   ...MAX_WIDTH,
   ...HEIGHT,
   ...MIN_HEIGHT,
+  ...MAX_HEIGHT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
