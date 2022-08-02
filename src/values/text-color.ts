@@ -2,11 +2,11 @@ import { createPropertiesMap } from '../utils/properties';
 import { BASE_COLOR } from './base/colors';
 
 export const TEXT_COLOR = {
-  'text-black': `color: ${BASE_COLOR.black}`,
-  'text-current': `color: ${BASE_COLOR.current}`,
-  'text-inherit': `color: ${BASE_COLOR.inherit}`,
-  'text-transparent': `color: ${BASE_COLOR.transparent}`,
-  'text-white': `color: ${BASE_COLOR.white}`,
+  'text-black': `color: ${BASE_COLOR.black};`,
+  'text-current': `color: ${BASE_COLOR.current};`,
+  'text-inherit': `color: ${BASE_COLOR.inherit};`,
+  'text-transparent': `color: ${BASE_COLOR.transparent};`,
+  'text-white': `color: ${BASE_COLOR.white};`,
   ...createPropertiesMap('text-amber', 'color', BASE_COLOR.amber),
   ...createPropertiesMap('text-blue', 'color', BASE_COLOR.blue),
   ...createPropertiesMap('text-cyan', 'color', BASE_COLOR.cyan),
