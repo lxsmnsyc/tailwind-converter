@@ -68,6 +68,8 @@ import { TEXT_COLOR } from './text-color';
 import { TEXT_DECORATION } from './text-decoration';
 import { TEXT_DECORATION_COLOR } from './text-decoration-color';
 import { TEXT_DECORATION_THICKNESS } from './text-decoration-thickness';
+import { TEXT_TRANSFORM } from './text-transform';
+import { TEXT_UNDERLINE_OFFSET } from './text-underline-offset';
 import { VISIBILITY } from './visibility';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
@@ -163,6 +165,8 @@ export const ATOMS = {
   ...TEXT_DECORATION,
   ...TEXT_DECORATION_COLOR,
   ...TEXT_DECORATION_THICKNESS,
+  ...TEXT_UNDERLINE_OFFSET,
+  ...TEXT_TRANSFORM,
 };
 
 export type AtomValue = keyof typeof ATOMS;
