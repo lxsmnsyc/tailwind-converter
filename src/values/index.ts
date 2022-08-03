@@ -72,6 +72,7 @@ import { TEXT_INDENT } from './text-indent';
 import { TEXT_OVERFLOW } from './text-overflow';
 import { TEXT_TRANSFORM } from './text-transform';
 import { TEXT_UNDERLINE_OFFSET } from './text-underline-offset';
+import { VERTICAL_ALIGN } from './vertical-align';
 import { VISIBILITY } from './visibility';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
@@ -171,6 +172,7 @@ export const ATOMS = {
   ...TEXT_TRANSFORM,
   ...TEXT_OVERFLOW,
   ...TEXT_INDENT,
+  ...VERTICAL_ALIGN,
 };
 
 export type AtomValue = keyof typeof ATOMS;
