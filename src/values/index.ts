@@ -76,6 +76,7 @@ import { VERTICAL_ALIGN } from './vertical-align';
 import { VISIBILITY } from './visibility';
 import { WHITESPACE } from './white-space';
 import { WIDTH } from './width';
+import { WORD_BREAK } from './word-break';
 import { Z_INDEX } from './z-index';
 
 export const DEFAULTS = {
@@ -175,6 +176,7 @@ export const ATOMS = {
   ...TEXT_INDENT,
   ...VERTICAL_ALIGN,
   ...WHITESPACE,
+  ...WORD_BREAK,
 };
 
 export type AtomValue = keyof typeof ATOMS;
