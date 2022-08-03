@@ -4,6 +4,9 @@ export const BASE_COLOR = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
+};
+
+export const BASE_COLOR_PALETTE = {
   slate: {
     50: '#f8fafc',
     100: '#f1f5f9',
@@ -271,3 +274,4 @@ export const BASE_COLOR = {
 };
 
 export type BaseColorValue = keyof typeof BASE_COLOR;
+export type BaseColorPaletteValue = keyof typeof BASE_COLOR_PALETTE;
