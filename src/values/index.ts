@@ -2,6 +2,7 @@ import { ALIGN_CONTENT } from './align-content';
 import { ALIGN_ITEMS } from './align-items';
 import { ALIGN_SELF } from './align-self';
 import { ASPECT_RATIO } from './aspect-ratio';
+import { BACKGROUND_ATTACHMENT } from './background-attachment';
 import { BOX_DECORATION } from './box-decoration';
 import { BOX_SIZING } from './box-sizing';
 import { BREAK_AFTER } from './break-after';
@@ -179,6 +180,9 @@ export const ATOMS = {
   ...WHITESPACE,
   ...WORD_BREAK,
   ...CONTENT,
+
+  // Backgrounds
+  ...BACKGROUND_ATTACHMENT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
