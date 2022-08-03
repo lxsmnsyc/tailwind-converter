@@ -6,10 +6,7 @@ export const FONT_SIZE = createPropertiesMapMixed(
   ['font-size', 'line-height'],
   BASE_FONT_SIZE['font-size'],
   {
-    'font-size': ({ property, value }) => `${property}: ${value};`,
-    'line-height': ({ property, key }) => (
-      `${property}: ${BASE_FONT_SIZE['line-height'][key]};`
-    ),
+    'line-height': ({ key }) => BASE_FONT_SIZE['line-height'][key],
   },
 );
 

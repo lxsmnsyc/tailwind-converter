@@ -1,8 +1,6 @@
-export const FLEX = {
-  'flex-1': 'flex: 1 1 0%;',
-  'flex-auto': 'flex: 1 1 auto;',
-  'flex-initial': 'flex: 0 1 auto;',
-  'flex-none': 'flex: none;',
-};
+import { createPropertiesMap } from '../utils/properties';
+import { BASE_FLEX } from './base/flex';
+
+export const FLEX = createPropertiesMap('flex', 'flex', BASE_FLEX);
 
 export type FlexValue = keyof typeof FLEX;

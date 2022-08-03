@@ -7,10 +7,12 @@ import {
 import { CSSMediaQuery } from '../css-media-query';
 
 function createContainer() {
-  const properties: Record<string, string> = {};
+  const properties: Record<string, Record<string, string>> = {};
 
   for (const property of Object.keys(BASE_SCREEN)) {
-    properties[BREAKPOINTS[property as BaseScreenValue]] = `max-width: ${BASE_SCREEN[property as BaseScreenValue]};`;
+    properties[BREAKPOINTS[property as BaseScreenValue]] = {
+      'max-width': BASE_SCREEN[property as BaseScreenValue],
+    };
   }
 
   return properties;
@@ -40,5 +42,5 @@ export default function createContainerProperty(atom: Atom) {
   }
 
   reset();
-  insertProperty('width: 100%;', atom);
+  insertProperty({ width: '100%' }, atom);
 }

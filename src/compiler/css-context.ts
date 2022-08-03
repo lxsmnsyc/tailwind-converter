@@ -1,4 +1,4 @@
-import { AtomValue } from '../parser/rules/atom';
+import { Atom } from '../parser/rules/atom';
 import { CSSBlock } from './css-block';
 import { CSSMediaQuery } from './css-media-query';
 
@@ -29,20 +29,25 @@ export function getBlock(): CSSBlock {
   return BLOCK_STACK[BLOCK_STACK.length - 1];
 }
 
-export function insertProperty(property: string | string[], atom: AtomValue): void {
-  if (Array.isArray(property)) {
-    for (const prop of property) {
-      getBlock().properties.push({
-        value: prop,
-        start: atom.start,
-        end: atom.end,
-      });
-    }
-  } else {
-    getBlock().properties.push({
-      value: property,
+export function getDefaultBlock(): CSSBlock {
+  return BLOCK_STACK[0];
+}
+
+export function insertPropertyForBlock(
+  block: CSSBlock,
+  properties: Record<string, string | number>,
+  atom: Atom,
+) {
+  for (const property of Object.keys(properties)) {
+    block.properties.push({
+      property,
+      value: properties[property],
       start: atom.start,
       end: atom.end,
     });
   }
+}
+
+export function insertProperty(properties: Record<string, string | number>, atom: Atom): void {
+  insertPropertyForBlock(getBlock(), properties, atom);
 }

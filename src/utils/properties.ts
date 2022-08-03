@@ -1,9 +1,9 @@
 export type PropertiesMap<Prefix extends string, Key extends string | number> = {
-  [key in `${Prefix}-${Key}`]: string;
+  [key in `${Prefix}-${Key}`]: Record<string, string>;
 }
 
 export type PropertiesMapMixed<Prefix extends string, Key extends string | number> = {
-  [key in `${Prefix}-${Key}`]: string[];
+  [key in `${Prefix}-${Key}`]: Record<string, string>;
 }
 
 export function createPropertiesMap<Prefix extends string, Key extends string | number>(
@@ -11,10 +11,12 @@ export function createPropertiesMap<Prefix extends string, Key extends string | 
   css: string,
   baseValues: Record<Key, string>,
 ): PropertiesMap<Prefix, Key> {
-  const properties: Record<string, string> = {};
+  const properties: Record<string, Record<string, string>> = {};
 
   for (const property of Object.keys(baseValues)) {
-    properties[`${prefix}-${property}`] = `${css}: ${baseValues[property as Key]};`;
+    properties[`${prefix}-${property}`] = {
+      [css]: baseValues[property as Key],
+    };
   }
 
   return properties as PropertiesMap<Prefix, Key>;
@@ -22,12 +24,17 @@ export function createPropertiesMap<Prefix extends string, Key extends string | 
 
 interface TransformParameter<
   Key extends string | number,
-  Properties extends string
 >{
-  property: Properties;
   key: Key;
   value: string;
 }
+
+type TransformOption<
+  Key extends string | number,
+  Properties extends string,
+> = {
+  [key in Properties]?: string | ((params: TransformParameter<Key>) => string);
+};
 
 export function createPropertiesMapMixed<
   Prefix extends string,
@@ -37,28 +44,41 @@ export function createPropertiesMapMixed<
   prefix: Prefix,
   css: Properties[],
   baseValues: Record<Key, string>,
-  transform?: Record<Properties, (params: TransformParameter<Key, Properties>) => string>,
+  transform?: TransformOption<Key, Properties>,
 ): PropertiesMapMixed<Prefix, Key> {
-  const properties: Record<string, string[]> = {};
+  const properties: Record<string, Record<string, string>> = {};
 
   if (transform) {
     for (const property of Object.keys(baseValues)) {
-      properties[`${prefix}-${property}`] = css.map((style) => {
-        if (style in transform) {
-          return transform[style]({
-            property: style,
-            value: baseValues[property as Key],
-            key: property as Key,
-          });
+      const record: Record<string, string> = {};
+
+      for (const style of css) {
+        const transformer = transform[style];
+        if (transformer) {
+          if (typeof transformer === 'function') {
+            record[style] = transformer({
+              value: baseValues[property as Key],
+              key: property as Key,
+            });
+          } else {
+            record[style] = transformer;
+          }
+        } else {
+          record[style] = baseValues[property as Key];
         }
-        return `${style}: ${baseValues[property as Key]};`;
-      });
+      }
+
+      properties[`${prefix}-${property}`] = record;
     }
   } else {
     for (const property of Object.keys(baseValues)) {
-      properties[`${prefix}-${property}`] = css.map((style) => (
-        `${style}: ${baseValues[property as Key]};`
-      ));
+      const record: Record<string, string> = {};
+
+      for (const style of css) {
+        record[style] = baseValues[property as Key];
+      }
+
+      properties[`${prefix}-${property}`] = record;
     }
   }
 
@@ -76,11 +96,15 @@ export function createSignedPropertiesMap<Prefix extends string, Key extends str
   css: string,
   baseValues: Record<Key, string>,
 ): SignedPropertiesMap<Prefix, Key> {
-  const properties: Record<string, string> = {};
+  const properties: Record<string, Record<string, string>> = {};
 
   for (const property of Object.keys(baseValues)) {
-    properties[`${prefix}-${property}`] = `${css}: ${baseValues[property as Key]};`;
-    properties[`-${prefix}-${property}`] = `${css}: -${baseValues[property as Key]};`;
+    properties[`${prefix}-${property}`] = {
+      [css]: baseValues[property as Key],
+    };
+    properties[`-${prefix}-${property}`] = {
+      [css]: `-${baseValues[property as Key]}`,
+    };
   }
 
   return properties as SignedPropertiesMap<Prefix, Key>;
@@ -91,11 +115,19 @@ export function createSignedPropertiesMapMixed<Prefix extends string, Key extend
   css: string[],
   baseValues: Record<Key, string>,
 ): SignedPropertiesMapMixed<Prefix, Key> {
-  const properties: Record<string, string[]> = {};
+  const properties: Record<string, Record<string, string>> = {};
 
   for (const property of Object.keys(baseValues)) {
-    properties[`${prefix}-${property}`] = css.map((style) => `${style}: ${baseValues[property as Key]};`);
-    properties[`-${prefix}-${property}`] = css.map((style) => `${style}: -${baseValues[property as Key]};`);
+    const record: Record<string, string> = {};
+    const subRecord: Record<string, string> = {};
+
+    for (const style of css) {
+      record[style] = baseValues[property as Key];
+      subRecord[style] = `-${baseValues[property as Key]}`;
+    }
+
+    properties[`${prefix}-${property}`] = record;
+    properties[`-${prefix}-${property}`] = subRecord;
   }
 
   return properties as SignedPropertiesMapMixed<Prefix, Key>;

@@ -21,7 +21,7 @@ import { FONT_FAMILY } from './font-family';
 import { FONT_SIZE } from './font-size';
 import { FONT_SMOOTHING } from './font-smoothing';
 import { FONT_STYLE } from './font-style';
-import { FONT_VARIANT_NUMERIC } from './font-variant-numeric';
+import { FONT_VARIANT_NUMERIC, FONT_VARIANT_NUMERIC_DEFAULTS } from './font-variant-numeric';
 import { FONT_WEIGHT } from './font-weight';
 import { GAP } from './gap';
 import { GRID_AUTO_COLUMNS } from './grid-auto-columns';
@@ -71,10 +71,14 @@ import { VISIBILITY } from './visibility';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
 
+export const DEFAULTS = {
+  ...FONT_VARIANT_NUMERIC_DEFAULTS,
+};
+
 export const ATOMS = {
   // Layouts
   ...ASPECT_RATIO,
-  container: '',
+  container: {},
   ...COLUMNS,
   ...BREAK_AFTER,
   ...BREAK_BEFORE,
@@ -160,3 +164,4 @@ export const ATOMS = {
 };
 
 export type AtomValue = keyof typeof ATOMS;
+export type DefaultValue = keyof typeof DEFAULTS;

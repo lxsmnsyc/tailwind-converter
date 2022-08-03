@@ -26,8 +26,6 @@ export default function atomWithVariant(feed: Feed): AtomWithVariant | undefined
 
   const result = matcher(feed);
 
-  console.log('atom-with-variant', result);
-
   if (result) {
     return {
       type: 'atom-with-variant',

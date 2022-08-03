@@ -1,7 +1,8 @@
 import { ASTPosition } from '../parser/core';
 
 export interface CSSProperty extends ASTPosition {
-  value: string;
+  property: string;
+  value: string | number;
 }
 
 export interface CSSBlock extends ASTPosition {

@@ -37,16 +37,12 @@ function serializeBlock(block: CSSBlock, level = 0) {
   let result = '';
 
   if (block.properties.length) {
-    for (const selector of block.selectors) {
-      result = `${result}${indent(level)}${selector} {\n`;
-      for (const property of block.properties) {
-        result = `${result}${indent(level + 1)}${property.value}\n`;
-      }
-      result = `${result}${indent(level)}}`;
-      if (selector !== block.selectors[block.selectors.length - 1]) {
-        result = `${result}\n`;
-      }
+    const mappedSelectors = block.selectors.join(', ');
+    result = `${result}${indent(level)}${mappedSelectors} {\n`;
+    for (const property of block.properties) {
+      result = `${result}${indent(level + 1)}${property.property}: ${property.value};\n`;
     }
+    result = `${result}${indent(level)}}`;
   }
 
   return result;
@@ -78,9 +74,8 @@ function serializeMediaQuery(block: CSSMediaQuery, level = 0) {
 function mergeBlock(instance: CSSBlock) {
   const properties: Record<string, CSSProperty> = {};
 
-  for (const property of instance.properties) {
-    const [key] = property.value.split(':');
-    properties[key] = property;
+  for (const prop of instance.properties) {
+    properties[prop.property] = prop;
   }
 
   instance.properties = Object.values(properties);
@@ -155,8 +150,11 @@ export default function compile(
 ) {
   const ast = parseClassnames(classnames);
 
+  const defaultBlock = createCSSBlock(['*', '::before', '::after', '::-webkit-backdrop', '::backdrop'], { start: 0, end: classnames.length });
   const topMedia = createCSSMediaQuery('', { start: 0, end: classnames.length });
+  topMedia.children.push(defaultBlock);
   pushMedia(topMedia);
+  pushBlock(defaultBlock);
 
   function traverse(node: Atom | VariantAtom) {
     if (node.type === 'atom-with-variant') {
@@ -200,7 +198,10 @@ export default function compile(
     }
   }
 
+  popBlock();
   popMedia();
+
+  mergeBlock(defaultBlock);
 
   return {
     ast,

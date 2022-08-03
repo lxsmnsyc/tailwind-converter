@@ -1,13 +1,18 @@
 import { Atom } from '../../parser/rules/atom';
-import { ATOMS, AtomValue } from '../../values';
+import {
+  ATOMS,
+  AtomValue,
+  DEFAULTS,
+  DefaultValue,
+} from '../../values';
 import { SpaceBetweenValue, SPACE_BETWEEN } from '../../values/space-between';
 import { createCSSBlock } from '../css-block';
 import {
   getBlock,
+  getDefaultBlock,
   getMedia,
   insertProperty,
-  popBlock,
-  pushBlock,
+  insertPropertyForBlock,
 } from '../css-context';
 import createContainerProperty from './container';
 
@@ -19,6 +24,11 @@ function isSpaceBetween(
 
 export default function createAtom(atom: Atom): void {
   const value = atom.value as AtomValue;
+
+  if (value in DEFAULTS) {
+    insertPropertyForBlock(getDefaultBlock(), DEFAULTS[value as DefaultValue], atom);
+  }
+
   if (value === 'container') {
     createContainerProperty(atom);
   } else if (isSpaceBetween(value)) {
@@ -28,9 +38,7 @@ export default function createAtom(atom: Atom): void {
       atom,
     );
     getMedia().children.push(block);
-    pushBlock(block);
-    insertProperty(ATOMS[value], atom);
-    popBlock();
+    insertPropertyForBlock(block, ATOMS[value], atom);
   } else {
     insertProperty(ATOMS[value], atom);
   }
