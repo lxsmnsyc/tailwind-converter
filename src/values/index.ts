@@ -9,6 +9,7 @@ import { BREAK_BEFORE } from './break-before';
 import { BREAK_INSIDE } from './break-inside';
 import { CLEAR } from './clear';
 import { COLUMNS } from './columns';
+import { CONTENT } from './content';
 import { DISPLAY } from './display';
 import { FLEX } from './flex';
 import { FLEX_BASIS } from './flex-basis';
@@ -177,6 +178,7 @@ export const ATOMS = {
   ...VERTICAL_ALIGN,
   ...WHITESPACE,
   ...WORD_BREAK,
+  ...CONTENT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
