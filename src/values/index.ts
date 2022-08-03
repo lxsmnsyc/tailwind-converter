@@ -74,6 +74,7 @@ import { TEXT_TRANSFORM } from './text-transform';
 import { TEXT_UNDERLINE_OFFSET } from './text-underline-offset';
 import { VERTICAL_ALIGN } from './vertical-align';
 import { VISIBILITY } from './visibility';
+import { WHITESPACE } from './white-space';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
 
@@ -173,6 +174,7 @@ export const ATOMS = {
   ...TEXT_OVERFLOW,
   ...TEXT_INDENT,
   ...VERTICAL_ALIGN,
+  ...WHITESPACE,
 };
 
 export type AtomValue = keyof typeof ATOMS;
