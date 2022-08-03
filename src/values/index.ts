@@ -67,6 +67,7 @@ import { TEXT_ALIGN } from './text-align';
 import { TEXT_COLOR } from './text-color';
 import { TEXT_DECORATION } from './text-decoration';
 import { TEXT_DECORATION_COLOR } from './text-decoration-color';
+import { TEXT_DECORATION_THICKNESS } from './text-decoration-thickness';
 import { VISIBILITY } from './visibility';
 import { WIDTH } from './width';
 import { Z_INDEX } from './z-index';
@@ -161,6 +162,7 @@ export const ATOMS = {
   ...TEXT_COLOR,
   ...TEXT_DECORATION,
   ...TEXT_DECORATION_COLOR,
+  ...TEXT_DECORATION_THICKNESS,
 };
 
 export type AtomValue = keyof typeof ATOMS;
