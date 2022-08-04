@@ -5,6 +5,7 @@ import { ASPECT_RATIO } from './aspect-ratio';
 import { BACKGROUND_ATTACHMENT } from './background-attachment';
 import { BACKGROUND_CLIP } from './background-clip';
 import { BACKGROUND_COLOR } from './background-color';
+import { BACKGROUND_ORIGIN } from './background-origin';
 import { BOX_DECORATION } from './box-decoration';
 import { BOX_SIZING } from './box-sizing';
 import { BREAK_AFTER } from './break-after';
@@ -187,6 +188,7 @@ export const ATOMS = {
   ...BACKGROUND_ATTACHMENT,
   ...BACKGROUND_CLIP,
   ...BACKGROUND_COLOR,
+  ...BACKGROUND_ORIGIN,
 };
 
 export type AtomValue = keyof typeof ATOMS;
