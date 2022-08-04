@@ -5,6 +5,7 @@ import { ASPECT_RATIO } from './aspect-ratio';
 import { BACKGROUND_ATTACHMENT } from './background-attachment';
 import { BACKGROUND_CLIP } from './background-clip';
 import { BACKGROUND_COLOR } from './background-color';
+import { BACKGROUND_IMAGE } from './background-image';
 import { BACKGROUND_ORIGIN } from './background-origin';
 import { BACKGROUND_POSITION } from './background-position';
 import { BACKGROUND_REPEAT } from './background-repeat';
@@ -195,6 +196,7 @@ export const ATOMS = {
   ...BACKGROUND_POSITION,
   ...BACKGROUND_REPEAT,
   ...BACKGROUND_SIZE,
+  ...BACKGROUND_IMAGE,
 };
 
 export type AtomValue = keyof typeof ATOMS;

@@ -4,4 +4,4 @@ export const BASE_BACKGROUND_SIZE = {
   contain: 'contain',
 };
 
-export type BaseBackgroundSize = keyof typeof BASE_BACKGROUND_SIZE;
+export type BaseBackgroundSizeValue = keyof typeof BASE_BACKGROUND_SIZE;
