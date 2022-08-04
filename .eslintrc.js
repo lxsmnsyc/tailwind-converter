@@ -9,6 +9,7 @@ module.exports = {
   },
   "rules": {
     "no-param-reassign": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "no-bitwise": "off"
   }
 };

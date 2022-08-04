@@ -10,13 +10,22 @@ export function createPropertiesMap<Prefix extends string, Key extends string | 
   prefix: Prefix,
   css: string,
   baseValues: Record<Key, string>,
+  transform?: (value: string) => string,
 ): PropertiesMap<Prefix, Key> {
   const properties: Record<string, Record<string, string>> = {};
 
-  for (const property of Object.keys(baseValues)) {
-    properties[`${prefix}-${property}`] = {
-      [css]: baseValues[property as Key],
-    };
+  if (transform) {
+    for (const property of Object.keys(baseValues)) {
+      properties[`${prefix}-${property}`] = {
+        [css]: transform(baseValues[property as Key]),
+      };
+    }
+  } else {
+    for (const property of Object.keys(baseValues)) {
+      properties[`${prefix}-${property}`] = {
+        [css]: baseValues[property as Key],
+      };
+    }
   }
 
   return properties as PropertiesMap<Prefix, Key>;
