@@ -7,6 +7,7 @@ import { BACKGROUND_CLIP } from './background-clip';
 import { BACKGROUND_COLOR } from './background-color';
 import { BACKGROUND_ORIGIN } from './background-origin';
 import { BACKGROUND_POSITION } from './background-position';
+import { BACKGROUND_REPEAT } from './background-repeat';
 import { BOX_DECORATION } from './box-decoration';
 import { BOX_SIZING } from './box-sizing';
 import { BREAK_AFTER } from './break-after';
@@ -191,6 +192,7 @@ export const ATOMS = {
   ...BACKGROUND_COLOR,
   ...BACKGROUND_ORIGIN,
   ...BACKGROUND_POSITION,
+  ...BACKGROUND_REPEAT,
 };
 
 export type AtomValue = keyof typeof ATOMS;
